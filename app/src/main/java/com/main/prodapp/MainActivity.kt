@@ -1,47 +1,48 @@
 package com.main.prodapp
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.main.prodapp.ui.theme.ProdAppTheme
+
+private const val TAG = "MainActivity"
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            ProdAppTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
+        setContentView(R.layout.activity_main)
+
+        Log.d(TAG, "Start onCreate")
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        Log.d(TAG, "Start onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        Log.d(TAG, "Start onResume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+
+        Log.d(TAG, "Start onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        Log.d(TAG, "Start onStop")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        Log.d(TAG, "Start onDestroy")
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ProdAppTheme {
-        Greeting("Android")
-    }
-}
