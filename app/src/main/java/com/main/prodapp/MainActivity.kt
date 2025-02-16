@@ -9,6 +9,8 @@ import androidx.fragment.app.replace
 import com.main.prodapp.databinding.ActivityMainBinding
 import com.main.prodapp.fragments.CalendarFragment
 import com.main.prodapp.fragments.InboxFragment
+import com.main.prodapp.fragments.ProfileFragment
+import com.main.prodapp.fragments.SettingFragment
 
 private const val TAG = "MainActivity"
 
@@ -24,6 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentCalendar = CalendarFragment()
         val fragmentInbox = InboxFragment()
+        val fragmentProfile = ProfileFragment()
+        val fragmentSetting = SettingFragment()
 
         setFragment(fragmentCalendar)
 
@@ -35,6 +39,14 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.inbox -> {
                     setFragment(fragmentInbox)
+                    true
+                }
+                R.id.profile -> {
+                    setFragment(fragmentProfile)
+                    true
+                }
+                R.id.setting -> {
+                    setFragment(fragmentSetting)
                     true
                 }
                 else -> {
