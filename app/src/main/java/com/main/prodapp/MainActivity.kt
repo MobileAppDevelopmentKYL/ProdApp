@@ -8,6 +8,7 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import com.main.prodapp.databinding.ActivityMainBinding
 import com.main.prodapp.fragments.CalendarFragment
+import com.main.prodapp.fragments.InboxFragment
 
 private const val TAG = "MainActivity"
 
@@ -22,9 +23,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val fragmentCalendar = CalendarFragment()
+        val fragmentInbox = InboxFragment()
 
         setFragment(fragmentCalendar)
 
+        binding.bottomNavView.setOnItemSelectedListener { item ->
+            when(item.itemId) {
+                R.id.calendar -> {
+                    setFragment(fragmentCalendar)
+                    true
+                }
+                R.id.inbox -> {
+                    setFragment(fragmentInbox)
+                    true
+                }
+                else -> {
+                    Log.e(TAG, "Error in Navbar")
+                    true
+                }
+            }
+        }
 
     }
 
