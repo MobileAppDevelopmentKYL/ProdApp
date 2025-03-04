@@ -11,6 +11,7 @@ import com.main.prodapp.fragments.CalendarFragment
 import com.main.prodapp.fragments.InboxFragment
 import com.main.prodapp.fragments.ProfileFragment
 import com.main.prodapp.fragments.SettingFragment
+import com.main.prodapp.fragments.SignInFragment
 
 private const val TAG = "MainActivity"
 
@@ -24,12 +25,13 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val fragmentSignIn = SignInFragment()
         val fragmentCalendar = CalendarFragment()
         val fragmentInbox = InboxFragment()
         val fragmentProfile = ProfileFragment()
         val fragmentSetting = SettingFragment()
 
-        setFragment(fragmentCalendar)
+        setFragment(fragmentSignIn)
 
         binding.bottomNavView.setOnItemSelectedListener { item ->
             when(item.itemId) {
