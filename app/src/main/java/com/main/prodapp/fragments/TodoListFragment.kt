@@ -46,10 +46,10 @@ class TodoListFragment : Fragment() {
         Log.d(TAG, "Start onCreateView")
         _binding = FragmentTodoListBinding.inflate(inflater, container, false)
 
-        todoRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        val adapter = TodoListAdapter(testTodoList)
-        todoRecyclerView.adapter = adapter
+        binding.todoRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        binding.todoRecyclerView.adapter = TodoListAdapter(testTodoList)
 
 
 
