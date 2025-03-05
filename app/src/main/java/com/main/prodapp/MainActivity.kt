@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.inbox -> {
-                    setFragment(fragmentInbox)
+                    setFragment(fragmentTodo)
                     true
                 }
                 R.id.profile -> {
@@ -55,10 +55,7 @@ class MainActivity : AppCompatActivity() {
                     setFragment(fragmentSetting)
                     true
                 }
-                R.id.todo -> {
-                    setFragment(fragmentTodo)
-                    true
-                }
+
                 else -> {
                     Log.e(TAG, "Error in Navbar")
                     true
