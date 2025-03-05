@@ -2,10 +2,15 @@ package com.main.prodapp
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.main.prodapp.databinding.ActivityMainBinding
 import com.main.prodapp.fragments.CalendarFragment
 import com.main.prodapp.fragments.InboxFragment
@@ -25,39 +30,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val fragmentSignIn = SignInFragment()
-        val fragmentCalendar = CalendarFragment()
-        val fragmentInbox = InboxFragment()
-        val fragmentProfile = ProfileFragment()
-        val fragmentSetting = SettingFragment()
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        val navController = navHostFragment.navController
+        findViewById<BottomNavigationView>(R.id.bottomNavView).setupWithNavController(navController)
 
-//        setFragment(fragmentSignIn)
-
-//        binding.bottomNavView.setOnItemSelectedListener { item ->
-//            when(item.itemId) {
-//                R.id.calendar -> {
-//                    setFragment(fragmentCalendar)
-//                    true
-//                }
-//                R.id.inbox -> {
-//                    setFragment(fragmentInbox)
-//                    true
-//                }
-//                R.id.profile -> {
-//                    setFragment(fragmentProfile)
-//                    true
-//                }
-//                R.id.setting -> {
-//                    setFragment(fragmentSetting)
-//                    true
-//                }
-//                else -> {
-//                    Log.e(TAG, "Error in Navbar")
-//                    true
-//                }
-//            }
-//        }
-
+        navController.addOnDestinationChangedListener{ _, destination, _ ->
+            if(destination.id == R.id.signInFragment) {
+                binding.bottomNavView.visibility = View.GONE
+            } else {
+                binding.bottomNavView.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onStart() {
