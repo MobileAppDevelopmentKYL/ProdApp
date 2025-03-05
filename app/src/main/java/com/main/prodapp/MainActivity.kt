@@ -2,6 +2,7 @@ package com.main.prodapp
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.main.prodapp.databinding.ActivityMainBinding
@@ -17,11 +18,15 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
+    private val toDoListViewModel : ToDoListViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "Start onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        Log.d(TAG, "Got a ToDoListViewModel: $toDoListViewModel")
 
         val fragmentCalendar = CalendarFragment()
         val fragmentInbox = InboxFragment()
