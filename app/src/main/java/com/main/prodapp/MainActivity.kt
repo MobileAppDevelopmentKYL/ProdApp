@@ -12,12 +12,18 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.main.prodapp.databinding.ActivityMainBinding
 import com.main.prodapp.fragments.CalendarFragment
 import com.main.prodapp.fragments.InboxFragment
 import com.main.prodapp.fragments.ProfileFragment
 import com.main.prodapp.fragments.SettingFragment
+
 import com.main.prodapp.fragments.SignInFragment
+import com.main.prodapp.fragments.TodoListFragment
+
 
 private const val TAG = "MainActivity"
 
@@ -25,12 +31,13 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
+    private val toDoListViewModel : ToDoListViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d(TAG, "Start onCreate")
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
@@ -42,7 +49,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 binding.bottomNavView.visibility = View.VISIBLE
             }
-        }
 
         binding.bottomNavView.setOnItemSelectedListener { item ->
             NavigationUI.onNavDestinationSelected(item, navController)

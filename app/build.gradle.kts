@@ -40,6 +40,7 @@ android {
         compose = true
         viewBinding = true
     }
+
 }
 
 dependencies {

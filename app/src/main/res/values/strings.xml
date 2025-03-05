@@ -7,6 +7,7 @@
     <string name="profile_icon_name">Profile</string>
     <string name="setting_icon_name">Setting</string>
 
+
     <!-- Sign In/Sign Up/Sign Out -->
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
@@ -14,5 +15,6 @@
     <string name="email_hint">Enter Email</string>
     <string name="password_hint">Enter Password</string>
 
+    <string name="todo_list_icon_name">List</string>
 
 </resources>

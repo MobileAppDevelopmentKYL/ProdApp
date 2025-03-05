@@ -1,19 +1,32 @@
 package com.main.prodapp.fragments
 
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.main.prodapp.databinding.FragmentInboxBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.main.prodapp.databinding.FragmentSettingBinding
+import com.main.prodapp.databinding.FragmentTodoListBinding
 
-private const val TAG = "InboxFragment"
+private const val TAG = "TodoListFragment"
 
-class InboxFragment : Fragment() {
-    
+class TodoListFragment : Fragment() {
 
-    private var _binding : FragmentInboxBinding? = null
+    private lateinit var todoRecyclerView: RecyclerView
+
+    private val testTodoList = listOf(
+
+        TodoData(title = "Do homework", description = "Work on mobile apps", isCompleted = false),
+        TodoData(title = "Go to north rec", description = "Workout", isCompleted = true),
+        TodoData(title = "Sleep all day", description = "Weekend", isCompleted = false),
+
+    )
+
+    private var _binding : FragmentTodoListBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
             "Cannot access binding because it is null. Is the view visible?"
@@ -31,7 +44,15 @@ class InboxFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG, "Start onCreateView")
-        _binding = FragmentInboxBinding.inflate(inflater, container, false)
+        _binding = FragmentTodoListBinding.inflate(inflater, container, false)
+
+
+        binding.todoRecyclerView.layoutManager = LinearLayoutManager(context)
+
+        binding.todoRecyclerView.adapter = TodoListAdapter(testTodoList)
+
+
+
         return binding.root
     }
 
