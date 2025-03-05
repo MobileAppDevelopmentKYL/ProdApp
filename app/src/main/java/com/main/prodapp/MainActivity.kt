@@ -31,32 +31,32 @@ class MainActivity : AppCompatActivity() {
         val fragmentProfile = ProfileFragment()
         val fragmentSetting = SettingFragment()
 
-        setFragment(fragmentSignIn)
+//        setFragment(fragmentSignIn)
 
-        binding.bottomNavView.setOnItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.calendar -> {
-                    setFragment(fragmentCalendar)
-                    true
-                }
-                R.id.inbox -> {
-                    setFragment(fragmentInbox)
-                    true
-                }
-                R.id.profile -> {
-                    setFragment(fragmentProfile)
-                    true
-                }
-                R.id.setting -> {
-                    setFragment(fragmentSetting)
-                    true
-                }
-                else -> {
-                    Log.e(TAG, "Error in Navbar")
-                    true
-                }
-            }
-        }
+//        binding.bottomNavView.setOnItemSelectedListener { item ->
+//            when(item.itemId) {
+//                R.id.calendar -> {
+//                    setFragment(fragmentCalendar)
+//                    true
+//                }
+//                R.id.inbox -> {
+//                    setFragment(fragmentInbox)
+//                    true
+//                }
+//                R.id.profile -> {
+//                    setFragment(fragmentProfile)
+//                    true
+//                }
+//                R.id.setting -> {
+//                    setFragment(fragmentSetting)
+//                    true
+//                }
+//                else -> {
+//                    Log.e(TAG, "Error in Navbar")
+//                    true
+//                }
+//            }
+//        }
 
     }
 
