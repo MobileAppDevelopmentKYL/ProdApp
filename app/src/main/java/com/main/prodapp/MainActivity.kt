@@ -9,6 +9,7 @@ import androidx.fragment.app.commit
 import androidx.fragment.app.replace
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.main.prodapp.databinding.ActivityMainBinding
@@ -30,9 +31,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         val navController = navHostFragment.navController
-        findViewById<BottomNavigationView>(R.id.bottomNavView).setupWithNavController(navController)
+        binding.bottomNavView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener{ _, destination, _ ->
             if(destination.id == R.id.signInFragment) {
@@ -40,6 +42,10 @@ class MainActivity : AppCompatActivity() {
             } else {
                 binding.bottomNavView.visibility = View.VISIBLE
             }
+        }
+
+        binding.bottomNavView.setOnItemSelectedListener { item ->
+            NavigationUI.onNavDestinationSelected(item, navController)
         }
     }
 

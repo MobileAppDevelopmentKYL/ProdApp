@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/calendar"
+        android:id="@+id/calendarFragment"
         android:title="@string/calendar_icon_name"
         android:icon="@drawable/calendar_icon" />
     <item
@@ -10,11 +10,11 @@
         android:title="@string/inbox_icon_name"
         android:icon="@drawable/inbox_icon" />
     <item
-        android:id="@+id/profile"
+        android:id="@+id/profileFragment"
         android:title="@string/profile_icon_name"
         android:icon="@drawable/account_icon" />
     <item
-        android:id="@+id/setting"
+        android:id="@+id/settingFragment"
         android:title="@string/setting_icon_name"
         android:icon="@drawable/setting_icon"/>
 </menu>
