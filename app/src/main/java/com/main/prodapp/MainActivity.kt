@@ -5,13 +5,12 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
 import com.main.prodapp.databinding.ActivityMainBinding
 import com.main.prodapp.fragments.CalendarFragment
 import com.main.prodapp.fragments.InboxFragment
 import com.main.prodapp.fragments.ProfileFragment
 import com.main.prodapp.fragments.SettingFragment
+import com.main.prodapp.fragments.TodoListFragment
 
 private const val TAG = "MainActivity"
 
@@ -33,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         val fragmentInbox = InboxFragment()
         val fragmentProfile = ProfileFragment()
         val fragmentSetting = SettingFragment()
+        val fragmentTodo = TodoListFragment()
+
 
         setFragment(fragmentCalendar)
 
@@ -52,6 +53,10 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.setting -> {
                     setFragment(fragmentSetting)
+                    true
+                }
+                R.id.todo -> {
+                    setFragment(fragmentTodo)
                     true
                 }
                 else -> {
