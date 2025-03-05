@@ -5,4 +5,5 @@
     <string name="inbox_icon_name">Inbox</string>
     <string name="profile_icon_name">Profile</string>
     <string name="setting_icon_name">Setting</string>
+    <string name="todo_list_icon_name">List</string>
 </resources>
