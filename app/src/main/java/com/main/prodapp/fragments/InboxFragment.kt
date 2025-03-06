@@ -11,6 +11,8 @@ import com.main.prodapp.databinding.FragmentInboxBinding
 private const val TAG = "InboxFragment"
 
 class InboxFragment : Fragment() {
+    
+
     private var _binding : FragmentInboxBinding? = null
     private val binding
         get() = checkNotNull(_binding) {

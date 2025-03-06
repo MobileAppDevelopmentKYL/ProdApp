@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.main.prodapp.fragments.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/show_inbox"
+            app:destination="@id/inboxFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.main.prodapp.fragments.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar"/>
+
+    <fragment
+        android:id="@+id/inboxFragment"
+        android:name="com.main.prodapp.fragments.InboxFragment"
+        android:label="fragment_inbox"
+        tools:layout="@layout/fragment_inbox" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.main.prodapp.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        android:layout="@layout/fragment_profile"/>
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.main.prodapp.fragments.SettingFragment"
+        android:label="fragment_setting"
+        android:layout="@layout/fragment_setting"/>
+</navigation>
