@@ -6,7 +6,7 @@ import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.fragments.TodoData
 import kotlinx.coroutines.flow.Flow
 
-private const val DATABASE_NAME = "todolist-database"
+private const val DATABASE_NAME = ""
 
 class TodoListRepository private constructor(context: Context) {
 

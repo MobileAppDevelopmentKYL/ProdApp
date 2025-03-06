@@ -8,12 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.main.prodapp.TodoListViewModel
+import com.main.prodapp.TodoListViewModelFactory
 import com.main.prodapp.databinding.FragmentSettingBinding
 import com.main.prodapp.databinding.FragmentTodoListBinding
+import kotlinx.coroutines.launch
 
 private const val TAG = "TodoListFragment"
 
@@ -28,7 +33,11 @@ class TodoListFragment : Fragment() {
 //        TodoData(title = "Sleep all day", description = "Weekend", isCompleted = false),
 //
 //    )
-    private val todoListViewModel: TodoListViewModel by activityViewModels()
+    private val todoListViewModel: TodoListViewModel by viewModels {
+        TodoListViewModelFactory("Title")
+}
+
+
     private lateinit var adapter: TodoListAdapter
 
     private var _binding : FragmentTodoListBinding? = null
@@ -80,7 +89,14 @@ class TodoListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        /*viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                todoListViewModel.todoList.collect { todoList ->
+                    binding.todoRecyclerView.adapter =
+                        TodoListAdapter(todoList)
+                }
+            }
+        }*/
 
     }
 
