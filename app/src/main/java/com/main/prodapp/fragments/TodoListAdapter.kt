@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.main.prodapp.databinding.ListItemTodoBinding
 
-class TodoListAdapter (private val todo: List<TodoData>) : RecyclerView.Adapter<TodoViewHolder>() {
+class TodoListAdapter (private var todo: List<TodoData>) : RecyclerView.Adapter<TodoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType:Int): TodoViewHolder{
 
@@ -27,4 +27,8 @@ class TodoListAdapter (private val todo: List<TodoData>) : RecyclerView.Adapter<
 
 
     override fun getItemCount() = todo.size
+
+
+
+
 }

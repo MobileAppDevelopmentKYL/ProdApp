@@ -28,19 +28,19 @@ class TodoListViewModel : ViewModel() {
         }
     }
 
-    /*fun addTodo(todo: TodoData) {
-        todoList = todoList + todo
+    fun addTodo(todo: TodoData) {
+        _todoList.value = _todoList.value + todo
         Log.d(TAG, "item added: $todo")
     }
 
-    fun removeTodo(todo: TodoData) {
-        todoList = todoList - todo
-        Log.d(TAG, "item removed: $todo")
-    }
-
-    fun getTodos(): List<TodoData> {
-        return todoList
-    }*/
+//    fun removeTodo(todo: TodoData) {
+//        todoList = todoList - todo
+//        Log.d(TAG, "item removed: $todo")
+//    }
+//
+//    fun getTodos(): List<TodoData> {
+//        return todoList
+//    }
 
     override fun onCleared() {
         super.onCleared()

@@ -7,8 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.main.prodapp.TodoListViewModel
 import com.main.prodapp.databinding.FragmentSettingBinding
 import com.main.prodapp.databinding.FragmentTodoListBinding
 
@@ -18,13 +21,15 @@ class TodoListFragment : Fragment() {
 
     private lateinit var todoRecyclerView: RecyclerView
 
-    private val testTodoList = listOf(
-
-        TodoData(title = "Do homework", description = "Work on mobile apps", isCompleted = false),
-        TodoData(title = "Go to north rec", description = "Workout", isCompleted = true),
-        TodoData(title = "Sleep all day", description = "Weekend", isCompleted = false),
-
-    )
+//    private val testTodoList = listOf(
+//
+//        TodoData(title = "Do homework", description = "Work on mobile apps", isCompleted = false),
+//        TodoData(title = "Go to north rec", description = "Workout", isCompleted = true),
+//        TodoData(title = "Sleep all day", description = "Weekend", isCompleted = false),
+//
+//    )
+    private val todoListViewModel: TodoListViewModel by activityViewModels()
+    private lateinit var adapter: TodoListAdapter
 
     private var _binding : FragmentTodoListBinding? = null
     private val binding
@@ -34,6 +39,8 @@ class TodoListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        adapter.notifyDataSetChanged()
 
         Log.d(TAG, "Start onCreate")
     }
@@ -48,8 +55,23 @@ class TodoListFragment : Fragment() {
 
 
         binding.todoRecyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = TodoListAdapter(emptyList())
+        binding.todoRecyclerView.adapter = adapter
 
-        binding.todoRecyclerView.adapter = TodoListAdapter(testTodoList)
+        binding.buttonAdd.setOnClickListener{
+            val title = binding.editTextTitle.text.toString()
+            val desc = binding.editTextDes.text.toString()
+            if(title.isNotEmpty() && desc.isNotEmpty()){
+
+                val newTodo = TodoData(title = title, description = desc, isCompleted = false)
+                todoListViewModel.addTodo(newTodo)
+                binding.editTextTitle.text.clear()
+                binding.editTextDes.text.clear()
+
+            }
+
+        }
+
 
 
 
@@ -58,6 +80,8 @@ class TodoListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
     }
 
     override fun onStart() {
