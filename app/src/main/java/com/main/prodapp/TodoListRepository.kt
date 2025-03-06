@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.fragments.TodoData
+import kotlinx.coroutines.flow.Flow
 
 private const val DATABASE_NAME = "todolist-database"
 
@@ -18,7 +19,7 @@ class TodoListRepository private constructor(context: Context) {
         .createFromAsset(DATABASE_NAME)
         .build()
 
-    suspend fun getTodoList(): List<TodoData> = database.todoListDao().getTodoList()
+    fun getTodoList(): Flow<List<TodoData>> = database.todoListDao().getTodoList()
     suspend fun getTodoItem(title: String): TodoData = database.todoListDao().getTodoItem(title)
 
     companion object {
