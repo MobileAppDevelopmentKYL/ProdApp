@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_sign_in" >
         <action
             android:id="@+id/show_inbox"
-            app:destination="@id/inboxFragment" />
+            app:destination="@id/todoFragment" />
     </fragment>
 
     <fragment
@@ -21,11 +21,17 @@
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar"/>
 
+<!--    <fragment-->
+<!--        android:id="@+id/inboxFragment"-->
+<!--        android:name="com.main.prodapp.fragments.InboxFragment"-->
+<!--        android:label="fragment_inbox"-->
+<!--        tools:layout="@layout/fragment_inbox" />-->
+
     <fragment
-        android:id="@+id/inboxFragment"
-        android:name="com.main.prodapp.fragments.InboxFragment"
-        android:label="fragment_inbox"
-        tools:layout="@layout/fragment_inbox" />
+        android:id="@+id/todoFragment"
+        android:name="com.main.prodapp.fragments.TodoListFragment"
+        android:label="fragment_todo"
+        tools:layout="@layout/fragment_todo_list" />
 
     <fragment
         android:id="@+id/profileFragment"
