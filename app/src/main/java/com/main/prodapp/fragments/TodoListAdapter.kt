@@ -29,6 +29,4 @@ class TodoListAdapter (private var todo: List<TodoData>) : RecyclerView.Adapter<
     override fun getItemCount() = todo.size
 
 
-
-
 }
