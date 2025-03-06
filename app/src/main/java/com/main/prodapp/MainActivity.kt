@@ -2,15 +2,14 @@ package com.main.prodapp
 
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
+import androidx.activity.viewModels
 import com.main.prodapp.databinding.ActivityMainBinding
-import com.main.prodapp.fragments.CalendarFragment
-import com.main.prodapp.fragments.InboxFragment
-import com.main.prodapp.fragments.ProfileFragment
-import com.main.prodapp.fragments.SettingFragment
-import com.main.prodapp.fragments.TodoListFragment
+
 
 private const val TAG = "MainActivity"
 
@@ -26,43 +25,21 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Log.d(TAG, "Got a ToDoListViewModel: $toDoListViewModel")
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        val navController = navHostFragment.navController
+        binding.bottomNavView.setupWithNavController(navController)
 
-        val fragmentCalendar = CalendarFragment()
-        val fragmentInbox = InboxFragment()
-        val fragmentProfile = ProfileFragment()
-        val fragmentSetting = SettingFragment()
-        val fragmentTodo = TodoListFragment()
-
-
-        setFragment(fragmentCalendar)
-
-        binding.bottomNavView.setOnItemSelectedListener { item ->
-            when(item.itemId) {
-                R.id.calendar -> {
-                    setFragment(fragmentCalendar)
-                    true
-                }
-                R.id.inbox -> {
-                    setFragment(fragmentTodo)
-                    true
-                }
-                R.id.profile -> {
-                    setFragment(fragmentProfile)
-                    true
-                }
-                R.id.setting -> {
-                    setFragment(fragmentSetting)
-                    true
-                }
-
-                else -> {
-                    Log.e(TAG, "Error in Navbar")
-                    true
-                }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.signInFragment) {
+                binding.bottomNavView.visibility = View.GONE
+            } else {
+                binding.bottomNavView.visibility = View.VISIBLE
             }
         }
 
+        binding.bottomNavView.setOnItemSelectedListener { item ->
+            NavigationUI.onNavDestinationSelected(item, navController)
+        }
     }
 
     override fun onStart() {
@@ -93,13 +70,6 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
 
         Log.d(TAG, "Start onDestroy")
-    }
-
-    private fun setFragment(fragment : Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
     }
 }
 
