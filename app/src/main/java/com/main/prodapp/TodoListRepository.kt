@@ -22,6 +22,14 @@ class TodoListRepository private constructor(context: Context) {
     fun getTodoList(): Flow<List<TodoData>> = database.todoListDao().getTodoList()
     suspend fun getTodoItem(title: String): TodoData = database.todoListDao().getTodoItem(title)
 
+    suspend fun updateTodo(todoData: TodoData){
+        database.todoListDao().updateTodo(todoData)
+    }
+
+    suspend fun insertTodo(todoData: TodoData) {
+        database.todoListDao().insertTodo(todoData)
+    }
+
     companion object {
         private var INSTANCE: TodoListRepository? = null
 

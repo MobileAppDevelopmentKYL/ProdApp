@@ -16,8 +16,10 @@ class TodoListViewModel : ViewModel() {
     //private var todoList:List<TodoData> = emptyList()
     private val todoListRepo = TodoListRepository.get()
     private val _todoList: MutableStateFlow<List<TodoData>> = MutableStateFlow(emptyList())
-    val todoList: StateFlow<List<TodoData>>
-        get() = _todoList.asStateFlow()
+    val todoList: StateFlow<List<TodoData>> = _todoList.asStateFlow()
+
+    private val _todoItem : MutableStateFlow<TodoData?> = MutableStateFlow(null)
+    val todoItem : StateFlow<TodoData?> = _todoItem.asStateFlow()
 
     init {
         Log.d(TAG, "ViewModel instance created")
@@ -28,9 +30,26 @@ class TodoListViewModel : ViewModel() {
         }
     }
 
-    fun addTodo(todo: TodoData) {
-        _todoList.value = _todoList.value + todo
-        Log.d(TAG, "item added: $todo")
+    fun loadTodoItem(title: String) {
+        viewModelScope.launch {
+            _todoItem.value = todoListRepo.getTodoItem(title)
+        }
+    }
+
+    fun updateTodo(todoData: TodoData) {
+        viewModelScope.launch {
+            todoListRepo.updateTodo(todoData)
+
+            _todoList.value = _todoList.value.map { if (it.title == todoData.title) todoData else it }
+        }
+    }
+
+    fun addTodo(todoData: TodoData) {
+        viewModelScope.launch {
+            todoListRepo.insertTodo(todoData)
+
+            _todoList.value += todoData
+        }
     }
 
 //    fun removeTodo(todo: TodoData) {
@@ -45,5 +64,9 @@ class TodoListViewModel : ViewModel() {
     override fun onCleared() {
         super.onCleared()
         Log.d(TAG, "ViewModel instance about to be destroyed")
+
+    //    viewModelScope.launch {
+    //        todoList.value?.let{todoListRepo.updateTodo(it)}
+    //    }
     }
 }
