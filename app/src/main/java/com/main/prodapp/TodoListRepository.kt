@@ -19,6 +19,7 @@ class TodoListRepository private constructor(context: Context) {
         .build()
 
     suspend fun getTodoList(): List<TodoData> = database.todoListDao().getTodoList()
+    suspend fun getTodoItem(title: String): TodoData = database.todoListDao().getTodoItem(title)
 
     companion object {
         private var INSTANCE: TodoListRepository? = null
@@ -31,7 +32,7 @@ class TodoListRepository private constructor(context: Context) {
 
         fun get(): TodoListRepository {
             return INSTANCE ?:
-            throw IllegalStateException("CrimeRepository must be initialized")
+            throw IllegalStateException("TodoListRepository must be initialized")
         }
     }
 }

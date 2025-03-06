@@ -1,10 +1,11 @@
 package com.main.prodapp.fragments
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 @Entity
 data class TodoData (
-    val title: String,
+    @PrimaryKey val title: String,
     val description: String,
     val isCompleted: Boolean = false
 
