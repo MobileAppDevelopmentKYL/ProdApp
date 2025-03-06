@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
-    private val toDoListViewModel : ToDoListViewModel by viewModels()
+    private val todoListViewModel : TodoListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
