@@ -4,25 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
-import androidx.fragment.app.replace
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
 import com.main.prodapp.databinding.ActivityMainBinding
-import com.main.prodapp.fragments.CalendarFragment
-import com.main.prodapp.fragments.InboxFragment
-import com.main.prodapp.fragments.ProfileFragment
-import com.main.prodapp.fragments.SettingFragment
-
-import com.main.prodapp.fragments.SignInFragment
-import com.main.prodapp.fragments.TodoListFragment
 
 
 private const val TAG = "MainActivity"
@@ -43,12 +29,13 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         binding.bottomNavView.setupWithNavController(navController)
 
-        navController.addOnDestinationChangedListener{ _, destination, _ ->
-            if(destination.id == R.id.signInFragment) {
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.signInFragment) {
                 binding.bottomNavView.visibility = View.GONE
             } else {
                 binding.bottomNavView.visibility = View.VISIBLE
             }
+        }
 
         binding.bottomNavView.setOnItemSelectedListener { item ->
             NavigationUI.onNavDestinationSelected(item, navController)
@@ -83,13 +70,6 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
 
         Log.d(TAG, "Start onDestroy")
-    }
-
-    private fun setFragment(fragment : Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
     }
 }
 
