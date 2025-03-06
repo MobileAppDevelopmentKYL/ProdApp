@@ -10,24 +10,29 @@ private const val TAG = "ToDoListViewModel"
 
 class ToDoListViewModel : ViewModel() {
 
-    private var toDoList:List<TodoData> = emptyList()
+    private var todoList:List<TodoData> = emptyList()
+    private val todoListRepo = TodoListRepository.get()
 
     init {
         Log.d(TAG, "ViewModel instance created")
     }
 
     fun addTodo(todo: TodoData) {
-        toDoList = toDoList + todo
+        todoList = todoList + todo
         Log.d(TAG, "item added: $todo")
     }
 
     fun removeTodo(todo: TodoData) {
-        toDoList = toDoList - todo
+        todoList = todoList - todo
         Log.d(TAG, "item removed: $todo")
     }
 
     fun getTodos(): List<TodoData> {
-        return toDoList
+        return todoList
+    }
+
+    suspend fun loadTodos(): List<TodoData> {
+        return todoListRepo.getTodoList()
     }
 
     override fun onCleared() {

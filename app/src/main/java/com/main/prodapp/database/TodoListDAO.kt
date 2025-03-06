@@ -7,5 +7,5 @@ import com.main.prodapp.fragments.TodoData
 @Dao
 interface TodoListDAO {
     @Query("SELECT * FROM tododata")
-    suspend fun getTodoItem(): List<TodoData>
+    suspend fun getTodoList(): List<TodoData>
 }

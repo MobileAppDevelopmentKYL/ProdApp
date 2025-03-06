@@ -15,9 +15,10 @@ class TodoListRepository private constructor(context: Context) {
             TodoListDatabase::class.java,
             DATABASE_NAME
         )
+        .createFromAsset(DATABASE_NAME)
         .build()
 
-    suspend fun getTodoItem(): List<TodoData> = database.todoListDao().getTodoItem()
+    suspend fun getTodoList(): List<TodoData> = database.todoListDao().getTodoList()
 
     companion object {
         private var INSTANCE: TodoListRepository? = null
