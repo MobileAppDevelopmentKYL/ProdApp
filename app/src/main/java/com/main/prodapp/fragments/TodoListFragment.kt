@@ -4,6 +4,8 @@ package com.main.prodapp.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -15,6 +17,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.main.prodapp.R
 import com.main.prodapp.TodoListViewModel
 import com.main.prodapp.TodoListViewModelFactory
 import com.main.prodapp.databinding.FragmentSettingBinding
@@ -49,7 +52,7 @@ class TodoListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setHasOptionsMenu(true)
 
         Log.d(TAG, "Start onCreate")
     }
@@ -140,5 +143,10 @@ class TodoListFragment : Fragment() {
         super.onDestroyView()
 
         Log.d(TAG, "Start onDestoryView")
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_todo_list, menu)
     }
 }

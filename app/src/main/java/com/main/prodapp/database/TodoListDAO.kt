@@ -16,7 +16,7 @@ interface TodoListDAO {
     @Query("SELECT * FROM tododata WHERE title = :title")
     suspend fun getTodoItem(title: String): TodoData
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTodo(todoData: TodoData)
 
     @Update

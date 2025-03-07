@@ -17,4 +17,6 @@
 
     <string name="todo_list_icon_name">List</string>
 
+    <string name="new_item">New Item</string>
+
 </resources>
