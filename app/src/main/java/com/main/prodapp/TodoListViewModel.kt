@@ -40,7 +40,10 @@ class TodoListViewModel(title: String) : ViewModel() {
     }
 
     suspend fun addTodo(todoData: TodoData) {
-        todoListRepo.insertTodo(todoData)
+        viewModelScope.launch {
+            todoListRepo.insertTodo(todoData)
+            _todoList.value += todoData
+        }
     }
 
     override fun onCleared() {

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -76,7 +77,7 @@ class TodoListFragment : Fragment() {
             if(title.isNotEmpty() && desc.isNotEmpty()){
 
                 val newTodo = TodoData(title = title, description = desc, isCompleted = false)
-                showNewTodo(newTodo)
+                showNewItem(newTodo)
                 binding.editTextTitle.text.clear()
                 binding.editTextDes.text.clear()
 
@@ -86,28 +87,20 @@ class TodoListFragment : Fragment() {
         return binding.root
     }
 
-    private fun showNewTodo(todoData: TodoData) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            todoListViewModel.addTodo(todoData)
-            /*findNavController().navigate(
-                TodoListFragmentDirections.showCrimeDetail(newCrime.id)
-            )*/
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*viewLifecycleOwner.lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 todoListViewModel.todoList.collect { todoList ->
                     binding.todoRecyclerView.adapter =
                         TodoListAdapter(todoList)
                 }
             }
-        }*/
+        }
 
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -145,8 +138,27 @@ class TodoListFragment : Fragment() {
         Log.d(TAG, "Start onDestoryView")
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.fragment_todo_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.new_crime -> {
+                showNewItem()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }*/
+
+    private fun showNewItem(newItem: TodoData) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            todoListViewModel.addTodo(newItem)
+            /*findNavController().navigate(
+                todoListFragmentDirections.showCrimeDetail(todoData.title)
+            )*/
+        }
     }
 }
