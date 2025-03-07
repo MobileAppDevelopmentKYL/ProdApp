@@ -53,9 +53,13 @@ class TodoListFragment : Fragment() {
 
 
         binding.todoRecyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = TodoListAdapter(emptyList()) {todoData ->
-            deleteTodoItem(todoData)
-        }
+        adapter = TodoListAdapter(
+            emptyList(),
+            onDelete = { todoData -> deleteTodoItem(todoData) },
+            onUpdate = { todoData -> updateTodoItem(todoData) }
+        )
+
+
         binding.todoRecyclerView.adapter = adapter
 
         binding.buttonAdd.setOnClickListener{
@@ -80,9 +84,11 @@ class TodoListFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 todoListViewModel.todoList.collect { todoList ->
                     binding.todoRecyclerView.adapter =
-                        TodoListAdapter(todoList) { todoData ->
-                            deleteTodoItem(todoData)
-                        }
+                        TodoListAdapter(
+                            todoList,
+                            onDelete = { todoData -> deleteTodoItem(todoData) },
+                            onUpdate = { todoData -> updateTodoItem(todoData) }
+                        )
                 }
             }
         }
@@ -128,6 +134,12 @@ class TodoListFragment : Fragment() {
     private fun deleteTodoItem(todoData: TodoData) {
         viewLifecycleOwner.lifecycleScope.launch {
             todoListViewModel.removeTodo(todoData)
+        }
+    }
+
+    private fun updateTodoItem(todoData: TodoData) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            todoListViewModel.updateTodo(todoData)
         }
     }
 
