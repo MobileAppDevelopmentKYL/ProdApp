@@ -4,24 +4,17 @@ package com.main.prodapp.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.main.prodapp.R
 import com.main.prodapp.TodoListViewModel
 import com.main.prodapp.TodoListViewModelFactory
-import com.main.prodapp.databinding.FragmentSettingBinding
 import com.main.prodapp.databinding.FragmentTodoListBinding
 import kotlinx.coroutines.launch
 
@@ -31,17 +24,9 @@ class TodoListFragment : Fragment() {
 
     private lateinit var todoRecyclerView: RecyclerView
 
-//    private val testTodoList = listOf(
-//
-//        TodoData(title = "Do homework", description = "Work on mobile apps", isCompleted = false),
-//        TodoData(title = "Go to north rec", description = "Workout", isCompleted = true),
-//        TodoData(title = "Sleep all day", description = "Weekend", isCompleted = false),
-//
-//    )
     private val todoListViewModel: TodoListViewModel by viewModels {
         TodoListViewModelFactory("Title")
 }
-
 
     private lateinit var adapter: TodoListAdapter
 
@@ -68,7 +53,9 @@ class TodoListFragment : Fragment() {
 
 
         binding.todoRecyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = TodoListAdapter(emptyList())
+        adapter = TodoListAdapter(emptyList()) {todoData ->
+            deleteTodoItem(todoData)
+        }
         binding.todoRecyclerView.adapter = adapter
 
         binding.buttonAdd.setOnClickListener{
@@ -80,7 +67,6 @@ class TodoListFragment : Fragment() {
                 showNewItem(newTodo)
                 binding.editTextTitle.text.clear()
                 binding.editTextDes.text.clear()
-
             }
 
         }
@@ -94,11 +80,12 @@ class TodoListFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 todoListViewModel.todoList.collect { todoList ->
                     binding.todoRecyclerView.adapter =
-                        TodoListAdapter(todoList)
+                        TodoListAdapter(todoList) { todoData ->
+                            deleteTodoItem(todoData)
+                        }
                 }
             }
         }
-
     }
 
 
@@ -136,6 +123,12 @@ class TodoListFragment : Fragment() {
         super.onDestroyView()
 
         Log.d(TAG, "Start onDestoryView")
+    }
+
+    private fun deleteTodoItem(todoData: TodoData) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            todoListViewModel.removeTodo(todoData)
+        }
     }
 
     /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
