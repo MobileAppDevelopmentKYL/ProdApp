@@ -4,13 +4,26 @@ package com.main.prodapp.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.main.prodapp.R
+import com.main.prodapp.TodoListViewModel
+import com.main.prodapp.TodoListViewModelFactory
 import com.main.prodapp.databinding.FragmentSettingBinding
 import com.main.prodapp.databinding.FragmentTodoListBinding
+import kotlinx.coroutines.launch
 
 private const val TAG = "TodoListFragment"
 
@@ -18,13 +31,19 @@ class TodoListFragment : Fragment() {
 
     private lateinit var todoRecyclerView: RecyclerView
 
-    private val testTodoList = listOf(
+//    private val testTodoList = listOf(
+//
+//        TodoData(title = "Do homework", description = "Work on mobile apps", isCompleted = false),
+//        TodoData(title = "Go to north rec", description = "Workout", isCompleted = true),
+//        TodoData(title = "Sleep all day", description = "Weekend", isCompleted = false),
+//
+//    )
+    private val todoListViewModel: TodoListViewModel by viewModels {
+        TodoListViewModelFactory("Title")
+}
 
-        TodoData(title = "Do homework", description = "Work on mobile apps", isCompleted = false),
-        TodoData(title = "Go to north rec", description = "Workout", isCompleted = true),
-        TodoData(title = "Sleep all day", description = "Weekend", isCompleted = false),
 
-    )
+    private lateinit var adapter: TodoListAdapter
 
     private var _binding : FragmentTodoListBinding? = null
     private val binding
@@ -34,6 +53,7 @@ class TodoListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
 
         Log.d(TAG, "Start onCreate")
     }
@@ -48,17 +68,39 @@ class TodoListFragment : Fragment() {
 
 
         binding.todoRecyclerView.layoutManager = LinearLayoutManager(context)
+        adapter = TodoListAdapter(emptyList())
+        binding.todoRecyclerView.adapter = adapter
 
-        binding.todoRecyclerView.adapter = TodoListAdapter(testTodoList)
+        binding.buttonAdd.setOnClickListener{
+            val title = binding.editTextTitle.text.toString()
+            val desc = binding.editTextDes.text.toString()
+            if(title.isNotEmpty() && desc.isNotEmpty()){
 
+                val newTodo = TodoData(title = title, description = desc, isCompleted = false)
+                showNewItem(newTodo)
+                binding.editTextTitle.text.clear()
+                binding.editTextDes.text.clear()
 
+            }
 
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                todoListViewModel.todoList.collect { todoList ->
+                    binding.todoRecyclerView.adapter =
+                        TodoListAdapter(todoList)
+                }
+            }
+        }
+
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -94,5 +136,29 @@ class TodoListFragment : Fragment() {
         super.onDestroyView()
 
         Log.d(TAG, "Start onDestoryView")
+    }
+
+    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.fragment_todo_list, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.new_crime -> {
+                showNewItem()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }*/
+
+    private fun showNewItem(newItem: TodoData) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            todoListViewModel.addTodo(newItem)
+            /*findNavController().navigate(
+                todoListFragmentDirections.showCrimeDetail(todoData.title)
+            )*/
+        }
     }
 }

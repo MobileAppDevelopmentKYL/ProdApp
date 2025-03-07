@@ -6,6 +6,7 @@ plugins {
     id("com.google.gms.google-services") version "4.4.2" apply true
 
     id("com.google.devtools.ksp")
+    id ("androidx.navigation.safeargs")
 }
 
 android {
@@ -74,4 +75,6 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
+    implementation (libs.androidx.appcompat)
+    implementation (libs.material.v150)
 }
