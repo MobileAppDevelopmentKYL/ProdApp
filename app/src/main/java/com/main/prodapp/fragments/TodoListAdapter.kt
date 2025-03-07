@@ -12,9 +12,6 @@ class TodoListAdapter (private var todo: List<TodoData>) : RecyclerView.Adapter<
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemTodoBinding.inflate(inflater, parent, false)
         return TodoViewHolder(binding)
-
-
-
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int){
@@ -22,11 +19,7 @@ class TodoListAdapter (private var todo: List<TodoData>) : RecyclerView.Adapter<
         val todoItem = todo[position]
 
         holder.bind(todoItem)
-
     }
 
-
     override fun getItemCount() = todo.size
-
-
 }
