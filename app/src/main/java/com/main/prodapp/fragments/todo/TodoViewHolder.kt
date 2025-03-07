@@ -1,5 +1,6 @@
-package com.main.prodapp.fragments
+package com.main.prodapp.fragments.todo
 import androidx.recyclerview.widget.RecyclerView
+import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.ListItemTodoBinding
 
 class TodoViewHolder (

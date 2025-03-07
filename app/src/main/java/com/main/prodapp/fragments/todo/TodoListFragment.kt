@@ -1,27 +1,10 @@
-package com.main.prodapp.fragments
-
+package com.main.prodapp.fragments.todo
 
 import android.os.Bundle
-import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -29,10 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.transition.Visibility
-import com.main.prodapp.TodoListViewModel
-import com.main.prodapp.TodoListViewModelFactory
+import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.FragmentTodoListBinding
+import com.main.prodapp.viewModel.TodoListViewModel
+import com.main.prodapp.viewModel.TodoListViewModelFactory
 import kotlinx.coroutines.launch
 
 private const val TAG = "TodoListFragment"

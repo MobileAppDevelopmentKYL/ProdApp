@@ -1,4 +1,4 @@
-package com.main.prodapp.fragments
+package com.main.prodapp.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
