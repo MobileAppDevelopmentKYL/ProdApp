@@ -4,11 +4,19 @@ import android.content.Context
 import androidx.room.Room
 import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.fragments.TodoData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
 
 private const val DATABASE_NAME = "todolist_database"
 
-class TodoListRepository private constructor(context: Context) {
+class TodoListRepository @OptIn(DelicateCoroutinesApi::class)
+private constructor(
+    context: Context,
+    private val coroutineScope : CoroutineScope = GlobalScope
+) {
 
     private val database: TodoListDatabase = Room
         .databaseBuilder(
@@ -21,8 +29,10 @@ class TodoListRepository private constructor(context: Context) {
     fun getTodoList(): Flow<List<TodoData>> = database.todoListDao().getTodoList()
     suspend fun getTodoItem(title: String): TodoData = database.todoListDao().getTodoItem(title)
 
-    suspend fun updateTodo(todoData: TodoData){
-        database.todoListDao().updateTodo(todoData)
+    fun updateTodo(todoData: TodoData){
+        coroutineScope.launch {
+            database.todoListDao().updateTodo(todoData)
+        }
     }
 
     suspend fun insertTodo(todoData: TodoData) {

@@ -2,10 +2,26 @@ package com.main.prodapp.fragments
 
 
 import android.os.Bundle
+import android.text.Editable
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -13,6 +29,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.transition.Visibility
 import com.main.prodapp.TodoListViewModel
 import com.main.prodapp.TodoListViewModelFactory
 import com.main.prodapp.databinding.FragmentTodoListBinding
@@ -51,11 +68,13 @@ class TodoListFragment : Fragment() {
         Log.d(TAG, "Start onCreateView")
         _binding = FragmentTodoListBinding.inflate(inflater, container, false)
 
-
         binding.todoRecyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = TodoListAdapter(emptyList()) {todoData ->
-            deleteTodoItem(todoData)
-        }
+        adapter = TodoListAdapter(
+            emptyList(),
+            onDelete = { todoData -> deleteTodoItem(todoData) },
+            onUpdate = { todoData -> updateData(todoData) }
+        )
+
         binding.todoRecyclerView.adapter = adapter
 
         binding.buttonAdd.setOnClickListener{
@@ -76,13 +95,17 @@ class TodoListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.updateButton.visibility = View.GONE
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 todoListViewModel.todoList.collect { todoList ->
                     binding.todoRecyclerView.adapter =
-                        TodoListAdapter(todoList) { todoData ->
-                            deleteTodoItem(todoData)
-                        }
+                        TodoListAdapter(
+                            todoList,
+                            onDelete = { todoData -> deleteTodoItem(todoData) },
+                            onUpdate = { todoData -> updateData(todoData) }
+                        )
                 }
             }
         }
@@ -130,6 +153,51 @@ class TodoListFragment : Fragment() {
             todoListViewModel.removeTodo(todoData)
         }
     }
+
+    private fun updateData(todoData: TodoData) {
+
+        binding.updateButton.visibility = View.VISIBLE
+        binding.buttonAdd.visibility = View.GONE
+
+        binding.editTextTitle.setText(todoData.title)
+
+        binding.updateButton.setOnClickListener {
+
+            val newDescription = binding.editTextDes.text.toString()
+
+            val newTodo = TodoData(todoData.title, newDescription, false)
+            viewLifecycleOwner.lifecycleScope.launch {
+                todoListViewModel.updateTodo(newTodo)
+            }
+
+            binding.updateButton.visibility = View.GONE
+            binding.buttonAdd.visibility = View.VISIBLE
+
+            binding.editTextTitle.setText("")
+            binding.editTextDes.setText("")
+        }
+    }
+
+//    @Composable
+//    private fun InputDialog(onDismissRequest: () -> Unit) {
+//        Dialog(onDismissRequest = { onDismissRequest }) {
+//            Card(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(200.dp)
+//                    .padding(16.dp),
+//                shape = RoundedCornerShape(16.dp),
+//            ) {
+//                Text(
+//                    text = "This new",
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .wrapContentSize(Alignment.Center),
+//                    textAlign = TextAlign.Center,
+//                )
+//            }
+//        }
+//    }
 
     /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
