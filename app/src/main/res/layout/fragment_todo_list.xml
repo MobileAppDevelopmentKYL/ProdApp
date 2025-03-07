@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragmentTodoListLayout"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -24,7 +24,7 @@
             android:ems="10"
             android:inputType="text"
             android:minHeight="48dp"
-            android:text="Title" />
+            android:hint="Title" />
 
         <EditText
             android:id="@+id/editTextDes"
@@ -33,13 +33,19 @@
             android:ems="10"
             android:inputType="text"
             android:minHeight="48dp"
-            android:text="Description" />
+            android:hint="Description" />
 
         <Button
             android:id="@+id/buttonAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Add" />
+
+        <Button
+            android:id="@+id/updateButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update"/>
     </LinearLayout>
 </LinearLayout>
 
