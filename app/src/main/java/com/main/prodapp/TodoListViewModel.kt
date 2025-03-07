@@ -39,12 +39,8 @@ class TodoListViewModel(title: String) : ViewModel() {
         }
     }
 
-    fun addTodo(todoData: TodoData) {
-        viewModelScope.launch {
-            todoListRepo.insertTodo(todoData)
-
-            _todoList.value += todoData
-        }
+    suspend fun addTodo(todoData: TodoData) {
+        todoListRepo.insertTodo(todoData)
     }
 
     override fun onCleared() {

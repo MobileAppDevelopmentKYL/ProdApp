@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.main.prodapp.TodoListViewModel
@@ -72,18 +73,23 @@ class TodoListFragment : Fragment() {
             if(title.isNotEmpty() && desc.isNotEmpty()){
 
                 val newTodo = TodoData(title = title, description = desc, isCompleted = false)
-                todoListViewModel.addTodo(newTodo)
+                showNewTodo(newTodo)
                 binding.editTextTitle.text.clear()
                 binding.editTextDes.text.clear()
 
             }
 
         }
-
-
-
-
         return binding.root
+    }
+
+    private fun showNewTodo(todoData: TodoData) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            todoListViewModel.addTodo(todoData)
+            /*findNavController().navigate(
+                TodoListFragmentDirections.showCrimeDetail(newCrime.id)
+            )*/
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
