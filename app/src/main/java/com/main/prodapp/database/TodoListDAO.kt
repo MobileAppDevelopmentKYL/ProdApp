@@ -1,6 +1,7 @@
 package com.main.prodapp.database
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -21,4 +22,7 @@ interface TodoListDAO {
 
     @Update
     suspend fun updateTodo(todoData: TodoData)
+
+    @Delete
+    suspend fun removeTodo(todoData: TodoData)
 }

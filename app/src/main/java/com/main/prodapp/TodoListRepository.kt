@@ -29,6 +29,10 @@ class TodoListRepository private constructor(context: Context) {
         database.todoListDao().insertTodo(todoData)
     }
 
+    suspend fun removeTodo(todoData: TodoData) {
+        database.todoListDao().removeTodo(todoData)
+    }
+
     companion object {
         private var INSTANCE: TodoListRepository? = null
 
