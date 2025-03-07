@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/todoFragment"
-        android:name="com.main.prodapp.fragments.TodoListFragment"
+        android:name="com.main.prodapp.fragments.todo.TodoListFragment"
         android:label="fragment_todo"
         tools:layout="@layout/fragment_todo_list" />
 

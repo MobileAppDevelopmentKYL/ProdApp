@@ -1,13 +1,11 @@
-package com.main.prodapp
+package com.main.prodapp.viewModel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.main.prodapp.fragments.TodoData
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.coroutineScope
+import com.main.prodapp.database.TodoListRepository
+import com.main.prodapp.database.TodoData
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

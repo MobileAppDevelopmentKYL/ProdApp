@@ -1,8 +1,9 @@
-package com.main.prodapp.fragments
+package com.main.prodapp.fragments.todo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.ListItemTodoBinding
 
 class TodoListAdapter (
@@ -10,7 +11,7 @@ class TodoListAdapter (
     private var onDelete: (TodoData) -> Unit,
     private var onUpdate: (TodoData) -> Unit) : RecyclerView.Adapter<TodoViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType:Int): TodoViewHolder{
+    override fun onCreateViewHolder(parent: ViewGroup, viewType:Int): TodoViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemTodoBinding.inflate(inflater, parent, false)
         return TodoViewHolder(binding, onDelete, onUpdate)

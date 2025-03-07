@@ -1,9 +1,7 @@
-package com.main.prodapp
+package com.main.prodapp.database
 
 import android.content.Context
 import androidx.room.Room
-import com.main.prodapp.database.TodoListDatabase
-import com.main.prodapp.fragments.TodoData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
