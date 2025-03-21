@@ -53,7 +53,6 @@ class SignInFragment : Fragment(), View.OnClickListener {
 
     }
 
-    //TODO: Sign Up Button
     override fun onClick(v: View) {
         when (v.id) {
             binding.signInButton.id -> {
