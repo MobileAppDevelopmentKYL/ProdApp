@@ -42,7 +42,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
         auth = Firebase.auth
 
         binding.signInButton.setOnClickListener(this)
-        binding.signUpTitle.setOnClickListener(this)
+        binding.moveToSignUpButton.setOnClickListener(this)
     }
 
     //TODO: Check if the user is already login
@@ -59,7 +59,9 @@ class SignInFragment : Fragment(), View.OnClickListener {
             binding.signInButton.id -> {
                 signIn(binding.emailField.text.toString(), binding.passwordField.text.toString())
             }
-            else -> Log.e("SignInFragment", "Error: Invalid button press")
+            else -> {
+                findNavController().navigate(R.id.show_sign_up_page)
+            }
         }
     }
 
