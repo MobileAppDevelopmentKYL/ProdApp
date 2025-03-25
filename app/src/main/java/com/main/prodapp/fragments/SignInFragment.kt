@@ -48,9 +48,10 @@ class SignInFragment : Fragment(), View.OnClickListener {
     //TODO: Check if the user is already login
     override fun onStart() {
         super.onStart()
-
-        // Check if the user is already login
-
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            findNavController().navigate(R.id.show_inbox)
+        }
     }
 
     override fun onClick(v: View) {
@@ -64,16 +65,19 @@ class SignInFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    // TODO: Check for null Strings
     private fun signIn(email: String, password: String) {
 
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    findNavController().navigate(R.id.show_inbox)
-                } else {
-                    Toast.makeText(context,"Authentication failed.",Toast.LENGTH_SHORT,).show()
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(context,"Email or Password Empty",Toast.LENGTH_SHORT,).show()
+        } else {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        findNavController().navigate(R.id.show_inbox)
+                    } else {
+                        Toast.makeText(context,"Authentication failed.",Toast.LENGTH_SHORT,).show()
+                    }
                 }
-            }
+        }
     }
 }
