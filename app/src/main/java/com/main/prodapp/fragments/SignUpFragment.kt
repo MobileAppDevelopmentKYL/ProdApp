@@ -54,17 +54,22 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    // TODO: Show Better Error. Why it failed. E.g. Email already exists, better password. 
     private fun signUp(email: String, password: String, confirmPassword: String) {
-        if (password == confirmPassword) {
+
+        if (email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            Toast.makeText(context, "All fields must be filled in.", Toast.LENGTH_SHORT).show()
+        }
+        else if (password == confirmPassword) {
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
                         findNavController().navigate(R.id.show_inbox)
                     } else {
-                        Toast.makeText(context,"Create Account failed.", Toast.LENGTH_SHORT,).show()
+                        Toast.makeText(context, task.exception?.message.toString(), Toast.LENGTH_LONG,).show()
                     }
                 }
+        } else {
+            Toast.makeText(context, "Passwords don't match.", Toast.LENGTH_SHORT).show()
         }
     }
 
