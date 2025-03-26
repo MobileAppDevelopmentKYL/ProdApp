@@ -9,12 +9,13 @@ import com.main.prodapp.databinding.ListItemTodoBinding
 class TodoListAdapter (
     private var todo: List<TodoData>,
     private var onDelete: (TodoData) -> Unit,
-    private var onUpdate: (TodoData) -> Unit) : RecyclerView.Adapter<TodoViewHolder>() {
+    private var onUpdate: (TodoData) -> Unit,
+    private var onCapture: (TodoData) -> Unit) : RecyclerView.Adapter<TodoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType:Int): TodoViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ListItemTodoBinding.inflate(inflater, parent, false)
-        return TodoViewHolder(binding, onDelete, onUpdate)
+        return TodoViewHolder(binding, onDelete, onUpdate, onCapture)
     }
 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int){

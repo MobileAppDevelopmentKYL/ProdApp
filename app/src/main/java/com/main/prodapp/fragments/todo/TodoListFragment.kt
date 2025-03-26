@@ -1,10 +1,13 @@
 package com.main.prodapp.fragments.todo
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -17,6 +20,8 @@ import com.main.prodapp.databinding.FragmentTodoListBinding
 import com.main.prodapp.viewModel.TodoListViewModel
 import com.main.prodapp.viewModel.TodoListViewModelFactory
 import kotlinx.coroutines.launch
+import java.io.File
+import java.util.Date
 
 private const val TAG = "TodoListFragment"
 
@@ -35,6 +40,27 @@ class TodoListFragment : Fragment() {
         get() = checkNotNull(_binding) {
             "Cannot access binding because it is null. Is the view visible?"
         }
+
+    private var currentTodoData: TodoData? = null
+    private var currentImage: Uri? = null
+
+    private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success) {
+            currentTodoData?.let { todoData ->
+                todoData.imagePath = currentImage?.path
+                updateDataWithImage(todoData)
+            }
+
+        }
+    }
+
+    private fun updateDataWithImage(todoData: TodoData) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            todoListViewModel.updateTodo(todoData)
+        }
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +81,15 @@ class TodoListFragment : Fragment() {
         adapter = TodoListAdapter(
             emptyList(),
             onDelete = { todoData -> deleteTodoItem(todoData) },
-            onUpdate = { todoData -> updateData(todoData) }
+            onUpdate = { todoData -> updateData(todoData) },
+            onCapture = { todoData ->
+
+                val imageFile = "${Date()}IMG.JPG"
+                val imageTransfer = File(requireContext().applicationContext.filesDir, imageFile)
+                currentImage = FileProvider.getUriForFile(requireContext(), "com.main.prodapp.savepicture" ,imageTransfer)
+                takePictureLauncher.launch(currentImage)
+            }
+
         )
 
         binding.todoRecyclerView.adapter = adapter
@@ -87,7 +121,14 @@ class TodoListFragment : Fragment() {
                         TodoListAdapter(
                             todoList,
                             onDelete = { todoData -> deleteTodoItem(todoData) },
-                            onUpdate = { todoData -> updateData(todoData) }
+                            onUpdate = { todoData -> updateData(todoData) },
+                            onCapture = { todoData ->
+
+                                val imageFile = "${Date()}IMG.JPG"
+                                val imageTransfer = File(requireContext().applicationContext.filesDir, imageFile)
+                                currentImage = FileProvider.getUriForFile(requireContext(), "com.main.prodapp.savepicture" ,imageTransfer)
+                                takePictureLauncher.launch(currentImage)
+                            }
                         )
                 }
             }
