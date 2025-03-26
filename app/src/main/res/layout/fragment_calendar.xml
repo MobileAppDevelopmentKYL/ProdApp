@@ -15,14 +15,14 @@
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp">
         <Button
+            android:id="@+id/prevMonthButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="<-"
+            android:text="prev"
             android:textColor="@color/black"
             android:background="@null"
             android:textStyle="bold"
-            android:onClick="previousMonthAction"
             android:textSize="20sp"/>
 
 
@@ -37,14 +37,14 @@
             android:text="Mar 2025" />
 
         <Button
+            android:id="@+id/nextMonthButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="->"
+            android:text="next"
             android:textColor="@color/black"
             android:background="@null"
             android:textStyle="bold"
-            android:onClick="nextMonthAction"
             android:textSize="20sp"/>
 
     </LinearLayout>
