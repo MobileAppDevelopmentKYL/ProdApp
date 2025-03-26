@@ -1,9 +1,11 @@
 package com.main.prodapp.fragments.todo
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.ListItemTodoBinding
+import java.io.File
 
 class TodoViewHolder (
     private val binding: ListItemTodoBinding,
@@ -34,9 +36,15 @@ class TodoViewHolder (
 
 
         if(!todoData.imagePath.isNullOrEmpty()){
-            binding.imageView2.visibility = View.VISIBLE
-            val bitmap = BitmapFactory.decodeFile(todoData.imagePath)
-            binding.imageView2.setImageBitmap(bitmap)
+            val imageFile = File(todoData.imagePath)
+            if(imageFile.exists()){
+                binding.imageView2.visibility = View.VISIBLE
+                val bitmap = BitmapFactory.decodeFile(todoData.imagePath)
+                binding.imageView2.setImageBitmap(bitmap)
+            }else{
+                Log.e("TodoViewHolder","Error saving photo!! ${imageFile}")
+            }
+
         }else{
             binding.imageView2.visibility = View.GONE
         }

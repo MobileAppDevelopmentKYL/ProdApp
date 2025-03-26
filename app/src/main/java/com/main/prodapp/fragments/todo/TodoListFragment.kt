@@ -28,6 +28,7 @@ private const val TAG = "TodoListFragment"
 class TodoListFragment : Fragment() {
 
     private lateinit var todoRecyclerView: RecyclerView
+    private var currentFilePath: String? = null
 
     private val todoListViewModel: TodoListViewModel by viewModels {
         TodoListViewModelFactory("Title")
@@ -47,7 +48,7 @@ class TodoListFragment : Fragment() {
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success) {
             currentTodoData?.let { todoData ->
-                todoData.imagePath = currentImage?.path
+                todoData.imagePath = currentFilePath
                 updateDataWithImage(todoData)
             }
 
@@ -84,8 +85,12 @@ class TodoListFragment : Fragment() {
             onUpdate = { todoData -> updateData(todoData) },
             onCapture = { todoData ->
 
-                val imageFile = "${Date()}IMG.JPG"
+                currentTodoData = todoData
+
+                val imageFile = "IMG_${Date()}.JPG"
                 val imageTransfer = File(requireContext().applicationContext.filesDir, imageFile)
+
+                currentFilePath = imageTransfer.absolutePath
                 currentImage = FileProvider.getUriForFile(requireContext(), "com.main.prodapp.savepicture" ,imageTransfer)
                 takePictureLauncher.launch(currentImage)
             }
@@ -124,8 +129,13 @@ class TodoListFragment : Fragment() {
                             onUpdate = { todoData -> updateData(todoData) },
                             onCapture = { todoData ->
 
-                                val imageFile = "${Date()}IMG.JPG"
+                                currentTodoData = todoData
+
+
+                                val imageFile = "IMG_${Date()}.JPG"
                                 val imageTransfer = File(requireContext().applicationContext.filesDir, imageFile)
+                                currentFilePath = imageTransfer.absolutePath
+
                                 currentImage = FileProvider.getUriForFile(requireContext(), "com.main.prodapp.savepicture" ,imageTransfer)
                                 takePictureLauncher.launch(currentImage)
                             }
