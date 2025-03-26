@@ -8,6 +8,7 @@
     app:cardUseCompatPadding="true"
     app:cardElevation="4dp"
     android:layout_margin="18dp"
+    android:padding="8dp"
     android:orientation="horizontal">
 
 
@@ -42,6 +43,8 @@
                 android:text="TextView"
                 android:textAppearance="?attr/textAppearanceHeadline6" />
 
+
+
             <CheckBox
                 android:id="@+id/todoCheckBox"
                 android:layout_width="201dp"
@@ -50,7 +53,23 @@
 
                 android:text="Mark as done" />
 
+
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/buttonCapture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Capture"/>
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="324dp"
+            tools:srcCompat="@tools:sample/backgrounds/scenic"
+            android:visibility="gone"
+            />
     </androidx.cardview.widget.CardView>
 
 
