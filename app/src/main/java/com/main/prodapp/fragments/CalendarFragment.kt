@@ -12,6 +12,7 @@ private const val TAG = "CalendarFragment"
 
 class CalendarFragment : Fragment() {
 
+
     private var _binding : FragmentCalendarBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
