@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,11 +14,14 @@ import com.main.prodapp.databinding.FragmentCalendarBinding
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import androidx.fragment.app.viewModels
+import com.main.prodapp.viewModel.CalendarViewModel
 
 private const val TAG = "CalendarFragment"
 
 class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
 
+    private val viewModel: CalendarViewModel by viewModels()
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = checkNotNull(_binding) {
         "Cannot access binding because it is null. Is the view visible?"
@@ -47,7 +49,7 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initWidgets()
-        setMonthView()
+        setMonthView(viewModel.selectedDate.value!!)
 
         binding.prevMonthButton.setOnClickListener { previousMonthAction() }
         binding.nextMonthButton.setOnClickListener { nextMonthAction() }
@@ -88,9 +90,9 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun setMonthView() {
-        binding.monthYearTV.text = monthYearFromDate(selectedDate)
-        val daysInMonth = daysInMonthArray(selectedDate)
+    private fun setMonthView(date: LocalDate) {
+        binding.monthYearTV.text = monthYearFromDate(date)
+        val daysInMonth = daysInMonthArray(date)
         binding.calendarRecyclerView.adapter = CalendarAdapter(daysInMonth, this)
     }
 
@@ -120,14 +122,16 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun previousMonthAction() {
-        selectedDate = selectedDate.minusMonths(1)
-        setMonthView()
+        val newDate = viewModel.selectedDate.value!!.minusMonths(1)
+        viewModel.updateSelectedDate(newDate)
+        setMonthView(newDate)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun nextMonthAction() {
-        selectedDate = selectedDate.plusMonths(1)
-        setMonthView()
+        val newDate = viewModel.selectedDate.value!!.plusMonths(1)
+        viewModel.updateSelectedDate(newDate)
+        setMonthView(newDate)
     }
 
     private fun displayDateSelected(date: String){
@@ -138,9 +142,13 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(position: Int, dayText: String) {
         if (dayText.isNotEmpty()) {
-            val message = "$dayText ${monthYearFromDate(selectedDate)}"
-            //TODO: Display items on that day
-            displayDateSelected(message)
+            val newDate = LocalDate.of(
+                viewModel.selectedDate.value!!.year,
+                viewModel.selectedDate.value!!.month,
+                dayText.toInt()
+            )
+            viewModel.updateSelectedDate(newDate)
+            displayDateSelected("$dayText ${monthYearFromDate(newDate)}")
         }
     }
 
