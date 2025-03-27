@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
 data class TodoData (
     @PrimaryKey val title: String,
     val description: String,
-    val isCompleted: Boolean = false
+    val isCompleted: Boolean = false,
+    var imagePath: String? = null
 
 )
 

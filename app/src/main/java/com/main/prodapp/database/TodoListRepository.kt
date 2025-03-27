@@ -22,6 +22,7 @@ private constructor(
             TodoListDatabase::class.java,
             DATABASE_NAME
         )
+        .fallbackToDestructiveMigration()
         .build()
 
     fun getTodoList(): Flow<List<TodoData>> = database.todoListDao().getTodoList()
