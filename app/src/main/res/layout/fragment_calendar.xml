@@ -132,13 +132,14 @@
         android:layout_marginTop="20dp">
 
         <TextView
+            android:id="@+id/dateSelectionHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:gravity="center"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="Todo Item On" />
+            android:text="Please Select a Date" />
         <TextView
             android:id="@+id/dateSelected"
             android:layout_width="match_parent"

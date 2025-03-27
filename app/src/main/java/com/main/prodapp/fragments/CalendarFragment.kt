@@ -130,12 +130,17 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
         setMonthView()
     }
 
+    private fun displayDateSelected(date: String){
+        binding.dateSelectionHeader.text = "Todo Items On:"
+        binding.dateSelected.text=date
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(position: Int, dayText: String) {
         if (dayText.isNotEmpty()) {
-            val message = "Selected Date $dayText ${monthYearFromDate(selectedDate)}"
+            val message = "$dayText ${monthYearFromDate(selectedDate)}"
             //TODO: Display items on that day
-            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+            displayDateSelected(message)
         }
     }
 
