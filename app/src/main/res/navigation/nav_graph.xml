@@ -13,6 +13,9 @@
         <action
             android:id="@+id/show_inbox"
             app:destination="@id/todoFragment" />
+        <action
+            android:id="@+id/show_sign_up_page"
+            app:destination="@id/signUpFragment" />
     </fragment>
 
     <fragment
@@ -44,4 +47,13 @@
         android:name="com.main.prodapp.fragments.SettingFragment"
         android:label="fragment_setting"
         android:layout="@layout/fragment_setting"/>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.main.prodapp.fragments.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/show_inbox"
+            app:destination="@id/todoFragment" />
+    </fragment>
 </navigation>
