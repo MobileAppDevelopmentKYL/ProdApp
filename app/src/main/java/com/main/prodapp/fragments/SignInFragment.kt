@@ -1,7 +1,6 @@
 package com.main.prodapp.fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,37 +41,42 @@ class SignInFragment : Fragment(), View.OnClickListener {
         auth = Firebase.auth
 
         binding.signInButton.setOnClickListener(this)
-        binding.signUpTitle.setOnClickListener(this)
+        binding.moveToSignUpButton.setOnClickListener(this)
     }
 
     //TODO: Check if the user is already login
     override fun onStart() {
         super.onStart()
-
-        // Check if the user is already login
-
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            findNavController().navigate(R.id.show_inbox)
+        }
     }
 
-    //TODO: Sign Up Button
     override fun onClick(v: View) {
         when (v.id) {
             binding.signInButton.id -> {
                 signIn(binding.emailField.text.toString(), binding.passwordField.text.toString())
             }
-            else -> Log.e("SignInFragment", "Error: Invalid button press")
+            else -> {
+                findNavController().navigate(R.id.show_sign_up_page)
+            }
         }
     }
 
-    // TODO: Check for null Strings
     private fun signIn(email: String, password: String) {
 
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    findNavController().navigate(R.id.show_inbox)
-                } else {
-                    Toast.makeText(context,"Authentication failed.",Toast.LENGTH_SHORT,).show()
+        if (email.isEmpty() || password.isEmpty()) {
+            Toast.makeText(context,"Email or Password Empty",Toast.LENGTH_SHORT,).show()
+        } else {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        findNavController().navigate(R.id.show_inbox)
+                    } else {
+                        Toast.makeText(context,"Authentication failed.",Toast.LENGTH_SHORT,).show()
+                    }
                 }
-            }
+        }
     }
 }

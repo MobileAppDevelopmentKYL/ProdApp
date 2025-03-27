@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.signInFragment) {
+            if (destination.id == R.id.signInFragment || destination.id == R.id.signUpFragment) {
                 binding.bottomNavView.visibility = View.GONE
             } else {
                 binding.bottomNavView.visibility = View.VISIBLE
