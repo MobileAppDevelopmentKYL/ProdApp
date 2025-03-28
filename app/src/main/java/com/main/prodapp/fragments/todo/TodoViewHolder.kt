@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.ListItemTodoBinding
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class TodoViewHolder (
     private val binding: ListItemTodoBinding,
@@ -17,6 +19,16 @@ class TodoViewHolder (
         binding.todoTitleText.text = todoData.title
         binding.todoDescriptionText.text = todoData.description
         binding.todoCheckBox.isChecked = todoData.isCompleted
+        binding.todoDateText.text = todoData.targetDate.toString()
+
+        val target = todoData.targetDate
+        if (target != null) {
+
+            val date = Date(target)
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+            binding.todoDateText.text = dateFormat.format(date)
+
+        }
 
 
         binding.root.setOnClickListener {
