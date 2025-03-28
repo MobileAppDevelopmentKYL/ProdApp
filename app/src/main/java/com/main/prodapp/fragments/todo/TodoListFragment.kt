@@ -15,8 +15,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.FragmentTodoListBinding
+import com.main.prodapp.helpers.FirebaseHelper
 import com.main.prodapp.viewModel.TodoListViewModel
 import com.main.prodapp.viewModel.TodoListViewModelFactory
 import kotlinx.coroutines.launch
@@ -32,9 +36,10 @@ class TodoListFragment : Fragment() {
 
     private val todoListViewModel: TodoListViewModel by viewModels {
         TodoListViewModelFactory("Title")
-}
+    }
 
     private lateinit var adapter: TodoListAdapter
+    private lateinit var db: FirebaseFirestore
 
     private var _binding : FragmentTodoListBinding? = null
     private val binding
@@ -66,6 +71,8 @@ class TodoListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        db = FirebaseHelper.db
 
         Log.d(TAG, "Start onCreate")
     }
@@ -104,8 +111,16 @@ class TodoListFragment : Fragment() {
             val desc = binding.editTextDes.text.toString()
             if(title.isNotEmpty() && desc.isNotEmpty()){
 
-                val newTodo = TodoData(title = title, description = desc, isCompleted = false)
-                showNewItem(newTodo)
+                val task = hashMapOf("taskID1" to hashMapOf("title" to title, "description" to desc))
+
+                db.collection("tasks").add(task)
+                    .addOnSuccessListener { documentReference ->
+                        Log.d("TASKS", "DocumentSnapshot added with ID: ${documentReference.id}")
+
+                        val newTodo = TodoData(taskID = documentReference.id, title = title, description = desc, isCompleted = false)
+                        showNewItem(newTodo)
+                    }
+
                 binding.editTextTitle.text.clear()
                 binding.editTextDes.text.clear()
             }
