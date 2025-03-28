@@ -198,6 +198,11 @@ class TodoListFragment : Fragment() {
     }
 
     private fun deleteTodoItem(todoData: TodoData) {
+
+        db.collection("tasks").document(todoData.taskID).delete()
+            .addOnSuccessListener { Log.d("Tasks", "DocumentSnapshot ${todoData.taskID}") }
+            .addOnFailureListener { e -> Log.w("Tasks", "Error deleting document", e) }
+
         viewLifecycleOwner.lifecycleScope.launch {
             todoListViewModel.removeTodo(todoData)
         }
