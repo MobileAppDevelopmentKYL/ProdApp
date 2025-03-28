@@ -111,7 +111,7 @@ class TodoListFragment : Fragment() {
             val desc = binding.editTextDes.text.toString()
             if(title.isNotEmpty() && desc.isNotEmpty()){
 
-                val task = hashMapOf("taskID1" to hashMapOf("title" to title, "description" to desc))
+                val task = hashMapOf("title" to title, "description" to desc)
 
                 db.collection("tasks").add(task)
                     .addOnSuccessListener { documentReference ->
@@ -219,7 +219,7 @@ class TodoListFragment : Fragment() {
 
             val newDescription = binding.editTextDes.text.toString()
 
-            val newTodo = TodoData(todoData.title, newDescription, false)
+            val newTodo = TodoData(todoData.taskID, todoData.title, newDescription, false)
             viewLifecycleOwner.lifecycleScope.launch {
                 todoListViewModel.updateTodo(newTodo)
             }
@@ -231,42 +231,6 @@ class TodoListFragment : Fragment() {
             binding.editTextDes.setText("")
         }
     }
-
-//    @Composable
-//    private fun InputDialog(onDismissRequest: () -> Unit) {
-//        Dialog(onDismissRequest = { onDismissRequest }) {
-//            Card(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(200.dp)
-//                    .padding(16.dp),
-//                shape = RoundedCornerShape(16.dp),
-//            ) {
-//                Text(
-//                    text = "This new",
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .wrapContentSize(Alignment.Center),
-//                    textAlign = TextAlign.Center,
-//                )
-//            }
-//        }
-//    }
-
-    /*override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.fragment_todo_list, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.new_crime -> {
-                showNewItem()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }*/
 
     private fun showNewItem(newItem: TodoData) {
         viewLifecycleOwner.lifecycleScope.launch {
