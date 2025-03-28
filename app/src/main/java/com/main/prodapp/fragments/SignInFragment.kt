@@ -6,12 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.main.prodapp.R
+import com.main.prodapp.database.UserData
 import com.main.prodapp.databinding.FragmentSignInBinding
+import com.main.prodapp.helpers.FirebaseService
+import kotlinx.coroutines.launch
 
 class SignInFragment : Fragment(), View.OnClickListener {
     private var _binding : FragmentSignInBinding? = null
@@ -38,13 +42,12 @@ class SignInFragment : Fragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        auth = Firebase.auth
+        auth = FirebaseService.auth
 
         binding.signInButton.setOnClickListener(this)
         binding.moveToSignUpButton.setOnClickListener(this)
     }
 
-    //TODO: Check if the user is already login
     override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
