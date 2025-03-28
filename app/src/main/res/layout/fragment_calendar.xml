@@ -139,7 +139,7 @@
             android:gravity="center"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:text="Please Select a Date" />
+            android:text="Todo Items On:" />
         <TextView
             android:id="@+id/dateSelected"
             android:layout_width="match_parent"

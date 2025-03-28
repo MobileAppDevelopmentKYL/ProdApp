@@ -50,6 +50,7 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
         super.onViewCreated(view, savedInstanceState)
         initWidgets()
         setMonthView(viewModel.selectedDate.value!!)
+        displayDateSelected(viewModel.selectedDate.value!!)
 
         binding.prevMonthButton.setOnClickListener { previousMonthAction() }
         binding.nextMonthButton.setOnClickListener { nextMonthAction() }
@@ -134,9 +135,8 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
         setMonthView(newDate)
     }
 
-    private fun displayDateSelected(date: String){
-        binding.dateSelectionHeader.text = "Todo Items On:"
-        binding.dateSelected.text=date
+    private fun displayDateSelected(date: LocalDate){
+        binding.dateSelected.text=date.toString()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -148,7 +148,7 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
                 dayText.toInt()
             )
             viewModel.updateSelectedDate(newDate)
-            displayDateSelected("$dayText ${monthYearFromDate(newDate)}")
+            displayDateSelected(newDate)
         }
     }
 
