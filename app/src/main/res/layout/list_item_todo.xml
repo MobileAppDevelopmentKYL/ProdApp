@@ -26,23 +26,29 @@
             android:id="@+id/fragmentTodoListLayout"
             android:layout_width="wrap_content"
             android:orientation="vertical"
-            android:layout_height="68dp"
-            android:layout_margin="18dp">
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <Button
+                android:id="@+id/buttonCapture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Capture" />
 
             <TextView
                 android:id="@+id/todoTitleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="0dp"
                 android:text="TextView"
-                android:textAppearance="?attr/textAppearanceBody2" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
             <TextView
                 android:id="@+id/todoDescriptionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 
             <TextView
@@ -50,34 +56,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textAppearance="?attr/textAppearanceHeadline6" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 
             <CheckBox
                 android:id="@+id/todoCheckBox"
                 android:layout_width="201dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="0dp"
 
                 android:text="Mark as done" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="324dp"
+                tools:srcCompat="@tools:sample/backgrounds/scenic"
+                android:visibility="gone"
+                />
+
+
+
+
 
 
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/buttonCapture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Capture"/>
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="324dp"
-            tools:srcCompat="@tools:sample/backgrounds/scenic"
-            android:visibility="gone"
-            />
+
+
     </androidx.cardview.widget.CardView>
 
 
