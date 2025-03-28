@@ -50,6 +50,15 @@
             android:inputType="text"
             android:minHeight="48dp" />
 
+        <EditText
+            android:id="@+id/editTextDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Date"
+            android:inputType="datetime"
+            android:minHeight="48dp" />
+
         <Button
             android:id="@+id/buttonAdd"
             android:layout_width="match_parent"

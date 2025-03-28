@@ -1,5 +1,6 @@
 package com.main.prodapp.fragments.todo
 
+
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +22,11 @@ import com.main.prodapp.viewModel.TodoListViewModel
 import com.main.prodapp.viewModel.TodoListViewModelFactory
 import kotlinx.coroutines.launch
 import java.io.File
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+
 import java.util.Date
+import java.util.Locale
 
 private const val TAG = "TodoListFragment"
 
@@ -32,7 +37,7 @@ class TodoListFragment : Fragment() {
 
     private val todoListViewModel: TodoListViewModel by viewModels {
         TodoListViewModelFactory("Title")
-}
+    }
 
     private lateinit var adapter: TodoListAdapter
 
@@ -102,9 +107,16 @@ class TodoListFragment : Fragment() {
         binding.buttonAdd.setOnClickListener{
             val title = binding.editTextTitle.text.toString()
             val desc = binding.editTextDes.text.toString()
+            val dateStr = binding.editTextDate.text.toString()
             if(title.isNotEmpty() && desc.isNotEmpty()){
 
-                val newTodo = TodoData(title = title, description = desc, isCompleted = false)
+
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+                val date = dateFormat.parse(dateStr)
+
+                val timeConv: Long? = date?.time
+
+                val newTodo = TodoData(title = title, description = desc, isCompleted = false, targetDate = timeConv)
                 showNewItem(newTodo)
                 binding.editTextTitle.text.clear()
                 binding.editTextDes.text.clear()
@@ -198,8 +210,14 @@ class TodoListFragment : Fragment() {
         binding.updateButton.setOnClickListener {
 
             val newDescription = binding.editTextDes.text.toString()
+            val dateVal = binding.editTextDate.toString()
 
-            val newTodo = TodoData(todoData.title, newDescription, false)
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+            val date = dateFormat.parse(dateVal)
+
+            val timeConv: Long? = date?.time
+
+            val newTodo = TodoData(todoData.title, newDescription, false, targetDate = timeConv)
             viewLifecycleOwner.lifecycleScope.launch {
                 todoListViewModel.updateTodo(newTodo)
             }
