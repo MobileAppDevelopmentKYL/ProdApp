@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.room.Room
+import com.google.firebase.firestore.FirebaseFirestore
+import com.main.prodapp.database.TodoData
 import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.databinding.ActivityMainBinding
-import com.main.prodapp.viewModel.TodoListViewModel
+import com.main.prodapp.helpers.FirebaseService
 import kotlinx.coroutines.launch
 
 
@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
 
     private lateinit var database: TodoListDatabase
+    private lateinit var db : FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +48,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         database = TodoListDatabase.getInstance(this)
+
+        db = FirebaseService.db
+
+        db.collection("tasks")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val todoItem = TodoData(taskID = document.id,
+                        title = document.data["title"].toString(),
+                        description = document.data["description"].toString())
+
+                    lifecycleScope.launch {
+                        database.todoListDao().insertTodo(todoItem)
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents.", exception)
+            }
     }
 
     override fun onStart() {
