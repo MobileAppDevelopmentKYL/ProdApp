@@ -8,8 +8,12 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.room.Room
+import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.databinding.ActivityMainBinding
 import com.main.prodapp.viewModel.TodoListViewModel
+import kotlinx.coroutines.launch
 
 
 private const val TAG = "MainActivity"
@@ -18,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
-    private val todoListViewModel : TodoListViewModel by viewModels()
+    private lateinit var database: TodoListDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +45,8 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setOnItemSelectedListener { item ->
             NavigationUI.onNavDestinationSelected(item, navController)
         }
+
+        database = TodoListDatabase.getInstance(this)
     }
 
     override fun onStart() {
@@ -63,6 +69,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+
+        lifecycleScope.launch {
+            database.todoListDao().deleteAll()
+        }
 
         Log.d(TAG, "Start onStop")
     }
