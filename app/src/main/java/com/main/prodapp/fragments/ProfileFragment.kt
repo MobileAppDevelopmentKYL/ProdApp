@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.main.prodapp.R
 import com.main.prodapp.databinding.FragmentInboxBinding
 import com.main.prodapp.databinding.FragmentProfileBinding
 
@@ -36,6 +38,12 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.buttonCharacter.setOnClickListener {
+
+            findNavController().navigate(R.id.transfer_to_character)
+
+        }
     }
 
     override fun onStart() {

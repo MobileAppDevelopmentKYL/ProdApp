@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.main.prodapp.database.CharacterRepo
-import com.main.prodapp.databinding.FragmentSettingBinding
+import com.main.prodapp.databinding.FragmentCharacterBinding
 
 
 
@@ -21,7 +21,7 @@ import com.main.prodapp.databinding.FragmentSettingBinding
 private const val TAG = "CharacterFragment"
 
 class CharacterFragment : Fragment() {
-    private var _binding : FragmentSettingBinding? = null
+    private var _binding : FragmentCharacterBinding? = null
 
     private lateinit var characterRepo : CharacterRepo
 
@@ -44,12 +44,18 @@ class CharacterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG, "Start onCreateView")
-        _binding = FragmentSettingBinding.inflate(inflater, container, false)
+        _binding = FragmentCharacterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val data = CharacterRepo.getCharacterDataAsMap()
+        binding.characterLevel.text = "Level: ${data["level"]}"
+        binding.characterXp.text = "XP: ${data["xp"]}/100"
+        binding.xpProgressBar.max = 100
+        binding.xpProgressBar.progress = data["xp"] as Int
     }
 
     override fun onStart() {
