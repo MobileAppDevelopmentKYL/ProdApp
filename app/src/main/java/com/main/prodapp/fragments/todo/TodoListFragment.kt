@@ -124,7 +124,7 @@ class TodoListFragment : Fragment() {
             val title = binding.editTextTitle.text.toString()
             val desc = binding.editTextDes.text.toString()
             val dateStr = binding.editDateButton.text.toString()
-            if (title.isNotEmpty() && desc.isNotEmpty()) {
+            if (title.isNotEmpty() && desc.isNotEmpty() && dateStr != "Select Date") {
 
 
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd")
