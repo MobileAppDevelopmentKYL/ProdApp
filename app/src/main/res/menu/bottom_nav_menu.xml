@@ -10,7 +10,7 @@
         android:title="@string/inbox_icon_name"
         android:icon="@drawable/inbox_icon" />
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/characterFragment"
         android:title="@string/profile_icon_name"
         android:icon="@drawable/account_icon" />
     <item

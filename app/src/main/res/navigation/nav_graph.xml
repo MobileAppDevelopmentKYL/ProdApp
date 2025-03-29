@@ -5,6 +5,10 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/signInFragment">
 
+
+
+
+
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.main.prodapp.fragments.SignInFragment"
@@ -40,7 +44,18 @@
         android:id="@+id/profileFragment"
         android:name="com.main.prodapp.fragments.ProfileFragment"
         android:label="fragment_profile"
-        android:layout="@layout/fragment_profile"/>
+        android:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/transfer_to_character"
+            app:destination="@id/characterFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/characterFragment"
+        android:name="com.main.prodapp.fragments.CharacterFragment"
+        android:label="fragment_character"
+        tools:layout="@layout/fragment_character" />
 
     <fragment
         android:id="@+id/settingFragment"
