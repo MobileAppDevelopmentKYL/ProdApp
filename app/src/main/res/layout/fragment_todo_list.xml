@@ -50,14 +50,14 @@
             android:inputType="text"
             android:minHeight="48dp" />
 
-        <EditText
-            android:id="@+id/editTextDate"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/editDateButton"
+            android:layout_width="182dp"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Date"
-            android:inputType="datetime"
-            android:minHeight="48dp" />
+            android:text="Select Date"
+            android:minHeight="48dp"
+            android:backgroundTint="@color/blue"/>
 
         <Button
             android:id="@+id/buttonAdd"

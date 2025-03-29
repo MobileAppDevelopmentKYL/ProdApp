@@ -1,6 +1,7 @@
 package com.main.prodapp.fragments.todo
 
 
+import android.app.DatePickerDialog
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,7 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.Calendar
 
 import java.util.Date
 import java.util.Locale
@@ -104,11 +106,25 @@ class TodoListFragment : Fragment() {
 
         binding.todoRecyclerView.adapter = adapter
 
-        binding.buttonAdd.setOnClickListener{
+        binding.editDateButton.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            val year = calendar.get(Calendar.YEAR)
+            val month = calendar.get(Calendar.MONTH)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+            val datePicker = DatePickerDialog(requireContext(), { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedDate = String.format("%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay)
+                binding.editDateButton.text = selectedDate
+            }, year, month, day)
+
+            datePicker.show()
+        }
+
+        binding.buttonAdd.setOnClickListener {
             val title = binding.editTextTitle.text.toString()
             val desc = binding.editTextDes.text.toString()
-            val dateStr = binding.editTextDate.text.toString()
-            if(title.isNotEmpty() && desc.isNotEmpty()){
+            val dateStr = binding.editDateButton.text.toString()
+            if (title.isNotEmpty() && desc.isNotEmpty()) {
 
 
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd")
@@ -116,10 +132,16 @@ class TodoListFragment : Fragment() {
 
                 val timeConv: Long? = date?.time
 
-                val newTodo = TodoData(title = title, description = desc, isCompleted = false, targetDate = timeConv)
+                val newTodo = TodoData(
+                    title = title,
+                    description = desc,
+                    isCompleted = false,
+                    targetDate = timeConv
+                )
                 showNewItem(newTodo)
                 binding.editTextTitle.text.clear()
                 binding.editTextDes.text.clear()
+                binding.editDateButton.text = "Select Date"
             }
 
         }
@@ -210,7 +232,7 @@ class TodoListFragment : Fragment() {
         binding.updateButton.setOnClickListener {
 
             val newDescription = binding.editTextDes.text.toString()
-            val dateVal = binding.editTextDate.toString()
+            val dateVal = binding.editDateButton.toString()
 
             val dateFormat = SimpleDateFormat("yyyy-MM-dd")
             val date = dateFormat.parse(dateVal)
