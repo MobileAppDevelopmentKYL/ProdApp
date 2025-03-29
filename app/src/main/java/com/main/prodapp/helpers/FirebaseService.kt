@@ -42,11 +42,11 @@ object FirebaseService {
         }
     }
 
-    suspend fun getCurrentUserTasks() : List<Task>? {
+    suspend fun getCurrentUserTasks() : List<Task> {
         val taskCollection = getTasksCollectionRef()
         val snapshot = taskCollection?.get()?.await()
 
-        return snapshot?.toObjects<Task>()
+        return snapshot?.toObjects<Task>() ?: emptyList()
     }
 
     suspend fun addTask(task : Task): String {
