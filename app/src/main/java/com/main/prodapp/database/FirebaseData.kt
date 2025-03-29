@@ -3,9 +3,10 @@ package com.main.prodapp.database
 import com.google.firebase.firestore.DocumentId
 
 data class UserData (
-    var userID: String?
+    var xp: Int = 0,
+    var level: Int = 0
 ) {
-    constructor() : this(null)
+    constructor() : this(0, 0)
 }
 
 data class Task(
