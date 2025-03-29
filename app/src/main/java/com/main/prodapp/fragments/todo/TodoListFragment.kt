@@ -99,6 +99,16 @@ class TodoListFragment : Fragment() {
                 takePictureLauncher.launch(currentImage)
             }
 
+//                currentTodoData = todoData
+//
+//                val imageFile = "IMG_${Date()}.JPG"
+//                val imageTransfer = File(requireContext().applicationContext.filesDir, imageFile)
+//
+//                currentFilePath = imageTransfer.absolutePath
+//                currentImage = FileProvider.getUriForFile(requireContext(), "com.main.prodapp.savepicture" ,imageTransfer)
+//                takePictureLauncher.launch(currentImage)
+//            }
+
         )
 
         binding.todoRecyclerView.adapter = adapter
@@ -108,12 +118,20 @@ class TodoListFragment : Fragment() {
             val desc = binding.editTextDes.text.toString()
             if(title.isNotEmpty() && desc.isNotEmpty()){
 
-                val task = hashMapOf("title" to title, "description" to desc)
-                val fireTask = Task(title = title, description = desc)
+//                val fireTask = Task(title = title, description = desc)
 
+//                viewLifecycleOwner.lifecycleScope.launch {
+//                    val documentID = FirebaseService.addTask(fireTask)
+//                    val newTodo = TodoData(taskID = documentID, title = title, description = desc, isCompleted = false)
+//                    showNewItem(newTodo)
+//                }
+
+//                val newTodo = TodoData(taskID = "99", title = title, description = desc, isCompleted = false)
+//                showNewItem(newTodo)
+                val task = Task(title = title, description = desc)
                 viewLifecycleOwner.lifecycleScope.launch {
-                    val documentID = FirebaseService.addTask(fireTask)
-                    val newTodo = TodoData(taskID = documentID, title = title, description = desc, isCompleted = false)
+                    val taskID = FirebaseService.addTask(task)
+                    val newTodo = TodoData(taskID = taskID, title = title, description = desc, isCompleted = false)
                     showNewItem(newTodo)
                 }
 
@@ -195,11 +213,8 @@ class TodoListFragment : Fragment() {
 
     private fun deleteTodoItem(todoData: TodoData) {
 
-        db.collection("tasks").document(todoData.taskID).delete()
-            .addOnSuccessListener { Log.d("Tasks", "DocumentSnapshot ${todoData.taskID}") }
-            .addOnFailureListener { e -> Log.w("Tasks", "Error deleting document", e) }
-
         viewLifecycleOwner.lifecycleScope.launch {
+            FirebaseService.deleteTask(todoData.taskID)
             todoListViewModel.removeTodo(todoData)
         }
     }
@@ -217,6 +232,7 @@ class TodoListFragment : Fragment() {
 
             val newTodo = TodoData(todoData.taskID, todoData.title, newDescription, false)
             viewLifecycleOwner.lifecycleScope.launch {
+                FirebaseService.updateTask(todoData.taskID, newDescription)
                 todoListViewModel.updateTodo(newTodo)
             }
 

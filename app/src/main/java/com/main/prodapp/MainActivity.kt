@@ -46,27 +46,6 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setOnItemSelectedListener { item ->
             NavigationUI.onNavDestinationSelected(item, navController)
         }
-
-        database = TodoListDatabase.getInstance(this)
-
-        db = FirebaseService.db
-
-        db.collection("tasks")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val todoItem = TodoData(taskID = document.id,
-                        title = document.data["title"].toString(),
-                        description = document.data["description"].toString())
-
-                    lifecycleScope.launch {
-                        database.todoListDao().insertTodo(todoItem)
-                    }
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents.", exception)
-            }
     }
 
     override fun onStart() {
@@ -90,9 +69,9 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
 
-        lifecycleScope.launch {
-            database.todoListDao().deleteAll()
-        }
+//        lifecycleScope.launch {
+//            database.todoListDao().deleteAll()
+//        }
 
         Log.d(TAG, "Start onStop")
     }

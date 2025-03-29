@@ -1,6 +1,7 @@
 package com.main.prodapp.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,9 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.main.prodapp.R
+import com.main.prodapp.database.Task
+import com.main.prodapp.database.TodoData
+import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.database.UserData
 import com.main.prodapp.databinding.FragmentSignInBinding
 import com.main.prodapp.helpers.FirebaseService
@@ -50,9 +54,24 @@ class SignInFragment : Fragment(), View.OnClickListener {
 
     override fun onStart() {
         super.onStart()
+        Log.d("SIGN", "START")
         val currentUser = auth.currentUser
+        val database = TodoListDatabase.getInstance(requireActivity())
         if (currentUser != null) {
-            findNavController().navigate(R.id.show_inbox)
+            viewLifecycleOwner.lifecycleScope.launch {
+                FirebaseService.createUserData(UserData())
+                val tasks = FirebaseService.getCurrentUserTasks()
+
+                for (task in tasks) {
+                    val todo = TodoData(taskID = task.id ?: "none",
+                        title = task.title ?: "none",
+                        description = task.description ?: "none")
+                    database.todoListDao().insertTodo(todo)
+                    Log.d("SIGN", "Insert")
+                }
+
+                findNavController().navigate(R.id.show_inbox)
+            }
         }
     }
 
