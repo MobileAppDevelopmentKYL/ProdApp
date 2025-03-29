@@ -3,6 +3,7 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.main.prodapp.database.CharacterRepo
 import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.ListItemTodoBinding
 import java.io.File
@@ -25,6 +26,7 @@ class TodoViewHolder (
 
         binding.todoCheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
+                CharacterRepo.increaseXpLevel(10)
                 onDelete(todoData)
             }
         }
@@ -32,6 +34,8 @@ class TodoViewHolder (
         binding.buttonCapture.setOnClickListener {
             onCapture(todoData)
         }
+
+
 
 
 

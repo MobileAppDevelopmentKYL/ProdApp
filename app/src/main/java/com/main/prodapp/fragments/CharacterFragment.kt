@@ -1,17 +1,32 @@
 package com.main.prodapp.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.main.prodapp.database.CharacterRepo
 import com.main.prodapp.databinding.FragmentSettingBinding
+
+
+
+
+
+
+
+
 
 private const val TAG = "CharacterFragment"
 
 class CharacterFragment : Fragment() {
     private var _binding : FragmentSettingBinding? = null
+
+    private lateinit var characterRepo : CharacterRepo
+
+
+
     private val binding
         get() = checkNotNull(_binding) {
             "Cannot access binding because it is null. Is the view visible?"

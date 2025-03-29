@@ -1,3 +1,5 @@
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -77,4 +79,11 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation (libs.androidx.appcompat)
     implementation (libs.material.v150)
+
+
+
+
+
+
+
 }
