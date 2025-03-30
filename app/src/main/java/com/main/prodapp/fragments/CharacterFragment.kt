@@ -56,6 +56,8 @@ class CharacterFragment : Fragment() {
         binding.characterXp.text = "XP: ${data["xp"]}/100"
         binding.xpProgressBar.max = 100
         binding.xpProgressBar.progress = data["xp"] as Int
+        binding.characterHealth.text = "Health: ${data["level"] as Int * 1.2}"
+        binding.characterStrength.text = "Strength: ${data["level"] as Int * 1.5}"
     }
 
     override fun onStart() {
