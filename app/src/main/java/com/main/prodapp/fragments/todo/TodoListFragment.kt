@@ -16,6 +16,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.main.prodapp.database.Task
 import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.FragmentTodoListBinding
@@ -39,6 +40,7 @@ class TodoListFragment : Fragment() {
 
     private lateinit var adapter: TodoListAdapter
     private lateinit var db: FirebaseFirestore
+    private lateinit var storage: FirebaseStorage
 
     private var _binding : FragmentTodoListBinding? = null
     private val binding
@@ -53,6 +55,13 @@ class TodoListFragment : Fragment() {
         if (success) {
             currentTodoData?.let { todoData ->
                 todoData.imagePath = currentFilePath
+
+                FirebaseService.uploadImage(currentFilePath ?: "none", storage)
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    FirebaseService.updateTaskImage(todoData.taskID, currentFilePath ?: "none")
+                }
+
                 updateDataWithImage(todoData)
             }
 
@@ -70,6 +79,7 @@ class TodoListFragment : Fragment() {
         setHasOptionsMenu(true)
 
         db = FirebaseService.db
+        storage = FirebaseService.storage
 
         Log.d(TAG, "Start onCreate")
     }
@@ -87,28 +97,7 @@ class TodoListFragment : Fragment() {
             emptyList(),
             onDelete = { todoData -> deleteTodoItem(todoData) },
             onUpdate = { todoData -> updateData(todoData) },
-            onCapture = { todoData ->
-
-                currentTodoData = todoData
-
-                val imageFile = "IMG_${Date()}.JPG"
-                val imageTransfer = File(requireContext().applicationContext.filesDir, imageFile)
-
-                currentFilePath = imageTransfer.absolutePath
-                currentImage = FileProvider.getUriForFile(requireContext(), "com.main.prodapp.savepicture" ,imageTransfer)
-                takePictureLauncher.launch(currentImage)
-            }
-
-//                currentTodoData = todoData
-//
-//                val imageFile = "IMG_${Date()}.JPG"
-//                val imageTransfer = File(requireContext().applicationContext.filesDir, imageFile)
-//
-//                currentFilePath = imageTransfer.absolutePath
-//                currentImage = FileProvider.getUriForFile(requireContext(), "com.main.prodapp.savepicture" ,imageTransfer)
-//                takePictureLauncher.launch(currentImage)
-//            }
-
+            onCapture = { todoData -> captureImage(todoData) }
         )
 
         binding.todoRecyclerView.adapter = adapter
@@ -118,16 +107,6 @@ class TodoListFragment : Fragment() {
             val desc = binding.editTextDes.text.toString()
             if(title.isNotEmpty() && desc.isNotEmpty()){
 
-//                val fireTask = Task(title = title, description = desc)
-
-//                viewLifecycleOwner.lifecycleScope.launch {
-//                    val documentID = FirebaseService.addTask(fireTask)
-//                    val newTodo = TodoData(taskID = documentID, title = title, description = desc, isCompleted = false)
-//                    showNewItem(newTodo)
-//                }
-
-//                val newTodo = TodoData(taskID = "99", title = title, description = desc, isCompleted = false)
-//                showNewItem(newTodo)
                 val task = Task(title = title, description = desc)
                 viewLifecycleOwner.lifecycleScope.launch {
                     val taskID = FirebaseService.addTask(task)
@@ -156,18 +135,7 @@ class TodoListFragment : Fragment() {
                             todoList,
                             onDelete = { todoData -> deleteTodoItem(todoData) },
                             onUpdate = { todoData -> updateData(todoData) },
-                            onCapture = { todoData ->
-
-                                currentTodoData = todoData
-
-
-                                val imageFile = "IMG_${Date()}.JPG"
-                                val imageTransfer = File(requireContext().applicationContext.filesDir, imageFile)
-                                currentFilePath = imageTransfer.absolutePath
-
-                                currentImage = FileProvider.getUriForFile(requireContext(), "com.main.prodapp.savepicture" ,imageTransfer)
-                                takePictureLauncher.launch(currentImage)
-                            }
+                            onCapture = { todoData -> captureImage(todoData)}
                         )
                 }
             }
@@ -232,7 +200,7 @@ class TodoListFragment : Fragment() {
 
             val newTodo = TodoData(todoData.taskID, todoData.title, newDescription, false)
             viewLifecycleOwner.lifecycleScope.launch {
-                FirebaseService.updateTask(todoData.taskID, newDescription)
+                FirebaseService.updateTaskDescription(todoData.taskID, newDescription)
                 todoListViewModel.updateTodo(newTodo)
             }
 
@@ -251,5 +219,16 @@ class TodoListFragment : Fragment() {
                 todoListFragmentDirections.showCrimeDetail(todoData.title)
             )*/
         }
+    }
+
+    private fun captureImage(todoData: TodoData) {
+        currentTodoData = todoData
+
+        val imageFile = "IMG_${Date()}.JPG"
+        val imageTransfer = File(requireContext().applicationContext.filesDir, imageFile)
+        currentFilePath = imageTransfer.absolutePath
+
+        currentImage = FileProvider.getUriForFile(requireContext(), "com.main.prodapp.savepicture" ,imageTransfer)
+        takePictureLauncher.launch(currentImage)
     }
 }

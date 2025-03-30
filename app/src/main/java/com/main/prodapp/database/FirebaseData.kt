@@ -13,7 +13,8 @@ data class Task(
     @DocumentId
     var id: String? = null,
     var title: String?,
-    var description: String?
+    var description: String?,
+    var imagePath: String? = null
 ) {
-    constructor() : this(null, null, null)
+    constructor() : this(null, null, null, null)
 }

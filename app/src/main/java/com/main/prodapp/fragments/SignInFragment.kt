@@ -20,6 +20,7 @@ import com.main.prodapp.database.UserData
 import com.main.prodapp.databinding.FragmentSignInBinding
 import com.main.prodapp.helpers.FirebaseService
 import kotlinx.coroutines.launch
+import java.io.File
 
 class SignInFragment : Fragment(), View.OnClickListener {
     private var _binding : FragmentSignInBinding? = null
@@ -55,23 +56,11 @@ class SignInFragment : Fragment(), View.OnClickListener {
     override fun onStart() {
         super.onStart()
         Log.d("SIGN", "START")
+
         val currentUser = auth.currentUser
-        val database = TodoListDatabase.getInstance(requireActivity())
+
         if (currentUser != null) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                FirebaseService.createUserData(UserData())
-                val tasks = FirebaseService.getCurrentUserTasks()
-
-                for (task in tasks) {
-                    val todo = TodoData(taskID = task.id ?: "none",
-                        title = task.title ?: "none",
-                        description = task.description ?: "none")
-                    database.todoListDao().insertTodo(todo)
-                    Log.d("SIGN", "Insert")
-                }
-
-                findNavController().navigate(R.id.show_inbox)
-            }
+            findNavController().navigate(R.id.show_inbox)
         }
     }
 
@@ -94,11 +83,41 @@ class SignInFragment : Fragment(), View.OnClickListener {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
-                        findNavController().navigate(R.id.show_inbox)
+                        loadUserData()
                     } else {
                         Toast.makeText(context,"Authentication failed.",Toast.LENGTH_SHORT,).show()
                     }
                 }
+        }
+    }
+
+    private fun loadUserData() {
+        val database = TodoListDatabase.getInstance(requireActivity())
+        Log.d("SIGN", "Begin Load")
+        viewLifecycleOwner.lifecycleScope.launch {
+            Log.d("SIGN", "Begin Launch")
+            FirebaseService.createUserData(UserData())
+            val tasks = FirebaseService.getCurrentUserTasks()
+//                var filePath: String? = null
+
+            for (task in tasks) {
+                var filePath: String? = null
+                if (task.imagePath != null) {
+                    FirebaseService.loadImage(requireContext(), task.imagePath.toString())
+                    filePath = File(requireContext().filesDir, task.imagePath!!).toString()
+                }
+
+                val todo = TodoData(taskID = task.id ?: "none",
+                    title = task.title ?: "none",
+                    description = task.description ?: "none",
+                    imagePath = filePath
+                )
+                database.todoListDao().insertTodo(todo)
+                Log.d("SIGN", "Insert")
+            }
+
+            Log.d("SIGN", "Switching")
+            findNavController().navigate(R.id.show_inbox)
         }
     }
 }
