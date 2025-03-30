@@ -19,6 +19,7 @@ import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.database.UserData
 import com.main.prodapp.databinding.FragmentSignInBinding
 import com.main.prodapp.helpers.FirebaseService
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -105,6 +106,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
                 if (task.imagePath != null) {
                     FirebaseService.loadImage(requireContext(), task.imagePath.toString())
                     filePath = File(requireContext().filesDir, task.imagePath!!).toString()
+                    delay(300L) // HOTFIX
                 }
 
                 val todo = TodoData(taskID = task.id ?: "none",
