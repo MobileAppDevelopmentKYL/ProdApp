@@ -1,20 +1,32 @@
 package com.main.prodapp.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.main.prodapp.R
-import com.main.prodapp.databinding.FragmentInboxBinding
-import com.main.prodapp.databinding.FragmentProfileBinding
+import com.main.prodapp.database.CharacterRepo
+import com.main.prodapp.databinding.FragmentCharacterBinding
 
-private const val TAG = "ProfileFragment"
 
-class ProfileFragment : Fragment() {
-    private var _binding : FragmentProfileBinding? = null
+
+
+
+
+
+
+
+private const val TAG = "CharacterFragment"
+
+class CharacterFragment : Fragment() {
+    private var _binding : FragmentCharacterBinding? = null
+
+    private lateinit var characterRepo : CharacterRepo
+
+
+
     private val binding
         get() = checkNotNull(_binding) {
             "Cannot access binding because it is null. Is the view visible?"
@@ -32,18 +44,20 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d(TAG, "Start onCreateView")
-        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        _binding = FragmentCharacterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonCharacter.setOnClickListener {
-
-            findNavController().navigate(R.id.transfer_to_character)
-
-        }
+        val data = CharacterRepo.getCharacterDataAsMap()
+        binding.characterLevel.text = "Level: ${data["level"]}"
+        binding.characterXp.text = "XP: ${data["xp"]}/100"
+        binding.xpProgressBar.max = 100
+        binding.xpProgressBar.progress = data["xp"] as Int
+        binding.characterHealth.text = "Health: ${data["level"] as Int * 1.2}"
+        binding.characterStrength.text = "Strength: ${data["level"] as Int * 1.5}"
     }
 
     override fun onStart() {
