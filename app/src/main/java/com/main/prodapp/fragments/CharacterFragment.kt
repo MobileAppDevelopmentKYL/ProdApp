@@ -11,22 +11,12 @@ import com.main.prodapp.database.CharacterRepo
 import com.main.prodapp.databinding.FragmentCharacterBinding
 import kotlin.random.Random
 
-
-
-
-
-
-
-
-
 private const val TAG = "CharacterFragment"
 
 class CharacterFragment : Fragment() {
     private var _binding : FragmentCharacterBinding? = null
 
     private lateinit var characterRepo : CharacterRepo
-
-
 
     private val binding
         get() = checkNotNull(_binding) {
@@ -105,7 +95,6 @@ class CharacterFragment : Fragment() {
         )
 
         return outcomes.random()
-
     }
 
     data class Adventure(
