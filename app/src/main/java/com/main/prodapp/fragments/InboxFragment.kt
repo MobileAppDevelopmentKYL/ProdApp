@@ -10,6 +10,8 @@ import com.main.prodapp.databinding.FragmentInboxBinding
 
 private const val TAG = "InboxFragment"
 
+/* This Fragment seems to be not in used. Consider deleting it. */
+
 class InboxFragment : Fragment() {
     
 
