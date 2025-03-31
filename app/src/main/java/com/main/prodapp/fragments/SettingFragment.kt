@@ -6,17 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.main.prodapp.R
+import com.main.prodapp.database.CharacterRepo
+import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.databinding.FragmentSettingBinding
+import com.main.prodapp.helpers.FirebaseService
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 private const val TAG = "SettingFragment"
 
 class SettingFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseFirestore: FirebaseFirestore
+    private lateinit var database: TodoListDatabase
 
     private var _binding : FragmentSettingBinding? = null
     private val binding
@@ -43,9 +52,18 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = Firebase.auth
+
         binding.signOut.setOnClickListener {
-            auth.signOut()
-            findNavController().navigate(R.id.action_settingFragment_to_signInFragment)
+            database = TodoListDatabase.getInstance(requireContext())
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                FirebaseService.updateGameData(CharacterRepo.getCharacterDataAsMap())
+                delay(0L)
+                database.todoListDao().deleteAll()
+
+                auth.signOut()
+                findNavController().navigate(R.id.action_settingFragment_to_signInFragment)
+            }
         }
     }
 

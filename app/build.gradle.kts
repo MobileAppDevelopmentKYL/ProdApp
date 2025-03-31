@@ -54,6 +54,7 @@ android {
 
 dependencies {
 
+    implementation(libs.firebase.firestore.ktx)
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 
     implementation(libs.androidx.core.ktx)
