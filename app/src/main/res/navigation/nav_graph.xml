@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="com.main.prodapp.fragments.CalendarFragment"
+        android:name="com.main.prodapp.fragments.calendar.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar"/>
 

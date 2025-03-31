@@ -1,4 +1,4 @@
-package com.main.prodapp.fragments
+package com.main.prodapp.fragments.calendar
 
 import android.os.Build
 import android.os.Bundle
@@ -8,14 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.main.prodapp.CalendarAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.main.prodapp.R
+import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.FragmentCalendarBinding
+import com.main.prodapp.viewModel.CalendarViewModel
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import androidx.fragment.app.viewModels
-import com.main.prodapp.viewModel.CalendarViewModel
 
 private const val TAG = "CalendarFragment"
 
@@ -29,6 +33,8 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private var selectedDate: LocalDate = LocalDate.now()
+
+    private lateinit var listAdapter: CalendarListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +56,34 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
         super.onViewCreated(view, savedInstanceState)
         initWidgets()
         setMonthView(viewModel.selectedDate.value!!)
-        displayDateSelected(viewModel.selectedDate.value!!)
+        binding.dateSelectionHeader.text = "Please Select a Date"
 
         binding.prevMonthButton.setOnClickListener { previousMonthAction() }
         binding.nextMonthButton.setOnClickListener { nextMonthAction() }
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.itemsRecyclerView)
+        listAdapter = CalendarListAdapter(mutableListOf())
+        recyclerView.adapter = listAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        displayItems(viewModel.selectedDate.value.toString())
+    }
+
+    private fun displayItems(dateStr: String){
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val date = dateFormat.parse(dateStr)
+
+        val timeConv: Long? = date?.time
+
+        val items: List<TodoData> = viewModel.getTodoList()
+        viewModel.clearList()
+        listAdapter.clearList()
+        for (data: TodoData in items){
+            if (data.targetDate == timeConv){
+                viewModel.addDisplayItem(data)
+                listAdapter.addItem(data)
+            }
+        }
     }
 
     override fun onStart() {
@@ -88,13 +118,18 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
 
     private fun initWidgets() {
         binding.calendarRecyclerView.layoutManager = GridLayoutManager(requireContext(), 7)
+        binding.itemsRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun setMonthView(date: LocalDate) {
         binding.monthYearTV.text = monthYearFromDate(date)
         val daysInMonth = daysInMonthArray(date)
-        binding.calendarRecyclerView.adapter = CalendarAdapter(daysInMonth, this)
+        binding.calendarRecyclerView.adapter =
+            CalendarAdapter(
+                daysInMonth,
+                this
+            )
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -136,6 +171,7 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
     }
 
     private fun displayDateSelected(date: LocalDate){
+        binding.dateSelectionHeader.text = "Things to do on"
         binding.dateSelected.text=date.toString()
     }
 
@@ -149,6 +185,7 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
             )
             viewModel.updateSelectedDate(newDate)
             displayDateSelected(newDate)
+            displayItems(newDate.toString())
         }
     }
 
