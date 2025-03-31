@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.main.prodapp.R
 import com.main.prodapp.databinding.FragmentSettingBinding
 
 private const val TAG = "SettingFragment"
@@ -44,6 +45,7 @@ class SettingFragment : Fragment() {
         auth = Firebase.auth
         binding.signOut.setOnClickListener {
             auth.signOut()
+            findNavController().navigate(R.id.action_settingFragment_to_signInFragment)
         }
     }
 
