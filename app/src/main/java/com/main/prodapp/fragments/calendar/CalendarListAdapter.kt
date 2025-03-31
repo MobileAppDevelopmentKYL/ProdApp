@@ -4,8 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.main.prodapp.R
+import com.main.prodapp.database.TodoData
 
-class CalendarListAdapter(private val itemList: MutableList<String>) :
+class CalendarListAdapter(private val itemList: MutableList<TodoData>) :
     RecyclerView.Adapter<CalendarListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarListViewHolder {
@@ -20,7 +21,7 @@ class CalendarListAdapter(private val itemList: MutableList<String>) :
 
     override fun getItemCount(): Int = itemList.size
 
-    fun addItem(newItem: String) {
+    fun addItem(newItem: TodoData) {
         itemList.add(newItem)
         notifyItemInserted(itemList.size - 1)
     }

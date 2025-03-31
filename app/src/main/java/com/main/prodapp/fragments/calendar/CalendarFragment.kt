@@ -10,8 +10,13 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.main.prodapp.R
+import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.FragmentCalendarBinding
 import com.main.prodapp.viewModel.CalendarViewModel
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -28,6 +33,8 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private var selectedDate: LocalDate = LocalDate.now()
+
+    private lateinit var listAdapter: CalendarListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +60,29 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
 
         binding.prevMonthButton.setOnClickListener { previousMonthAction() }
         binding.nextMonthButton.setOnClickListener { nextMonthAction() }
+
+        val recyclerView = view.findViewById<RecyclerView>(R.id.itemsRecyclerView)
+        listAdapter = CalendarListAdapter(mutableListOf())
+        recyclerView.adapter = listAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        displayItems(viewModel.selectedDate.value.toString())
+    }
+
+    private fun displayItems(dateStr: String){
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+        val date = dateFormat.parse(dateStr)
+
+        val timeConv: Long? = date?.time
+
+        val items: List<TodoData> = viewModel.getTodoList()
+        for (data: TodoData in items){
+            if (data.targetDate == timeConv){
+                viewModel.addDisplayItem(data)
+                listAdapter.addItem(data)
+            }
+
+        }
     }
 
     override fun onStart() {
@@ -87,6 +117,7 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
 
     private fun initWidgets() {
         binding.calendarRecyclerView.layoutManager = GridLayoutManager(requireContext(), 7)
+        binding.itemsRecyclerView.layoutManager = LinearLayoutManager(context)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -152,6 +183,7 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
             )
             viewModel.updateSelectedDate(newDate)
             displayDateSelected(newDate)
+            displayItems(newDate.toString())
         }
     }
 
