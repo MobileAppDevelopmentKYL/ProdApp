@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.main.prodapp.database.CharacterRepo
 import com.main.prodapp.databinding.FragmentCharacterBinding
+import kotlin.random.Random
 
 
 
@@ -56,7 +57,61 @@ class CharacterFragment : Fragment() {
         binding.characterXp.text = "XP: ${data["xp"]}/100"
         binding.characterHealth.text = "Health: ${data["level"] as Int * 12}"
         binding.characterStrength.text = "Strength: ${data["level"] as Int * 15}"
+
+
+        binding.adventureButton.setOnClickListener{
+            val outcome = adventureStart()
+
+            CharacterRepo.increaseXpLevel(outcome.xpChange)
+
+            if(binding.adventureOutcome.visibility == View.GONE){
+                binding.adventureOutcome.visibility = View.VISIBLE
+            }
+
+            if(binding.adventureDetail.visibility == View.GONE) {
+                binding.adventureDetail.visibility = View.VISIBLE
+            }
+
+            binding.adventureOutcome.text = outcome.message
+            binding.adventureDetail.text = "You gained ${outcome.xpChange} XP!"
+
+            refreshPage()
+
+
+        }
     }
+
+    private fun refreshPage(){
+
+        val charData = CharacterRepo.getCharacterDataAsMap()
+        val level = charData["level"] as Int
+        val xp = charData["xp"] as Int
+
+        binding.characterLevel.text = "Level: ${level}"
+        binding.characterXp.text = "XP: ${charData["xp"]}/100"
+        binding.characterHealth.text = "Health: ${level * 12}"
+        binding.characterStrength.text = "Strength: ${level * 15}"
+
+    }
+
+
+    private fun adventureStart(): Adventure{
+        val outcomes = listOf(
+            Adventure("You fought a dragon and won!", Random.nextInt(5, 15)),
+            Adventure("You fought a goblin and lost! You are useless!", Random.nextInt(-10, -5)),
+            Adventure("You fought a gold mine! Yay :)", Random.nextInt(10, 20)),
+            Adventure("You achieved nothing and was useless!", Random.nextInt(-5, 0))
+
+        )
+
+        return outcomes.random()
+
+    }
+
+    data class Adventure(
+        val message: String,
+        val xpChange: Int
+    )
 
     override fun onStart() {
         super.onStart()
