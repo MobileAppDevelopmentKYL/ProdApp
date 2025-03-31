@@ -61,7 +61,11 @@
         android:id="@+id/settingFragment"
         android:name="com.main.prodapp.fragments.SettingFragment"
         android:label="fragment_setting"
-        android:layout="@layout/fragment_setting"/>
+        android:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_settingFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.main.prodapp.fragments.SignUpFragment"
