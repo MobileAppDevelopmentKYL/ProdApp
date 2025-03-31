@@ -25,4 +25,9 @@ class CalendarListAdapter(private val itemList: MutableList<TodoData>) :
         itemList.add(newItem)
         notifyItemInserted(itemList.size - 1)
     }
+
+    fun clearList(){
+        itemList.clear()
+        notifyDataSetChanged()
+    }
 }

@@ -51,4 +51,8 @@ class CalendarViewModel : ViewModel() {
     fun addDisplayItem(data: TodoData){
         displayedList = displayedList + data
     }
+
+    fun clearList(){
+        displayedList = emptyList()
+    }
 }

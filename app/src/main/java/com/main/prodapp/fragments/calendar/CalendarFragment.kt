@@ -76,12 +76,13 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
         val timeConv: Long? = date?.time
 
         val items: List<TodoData> = viewModel.getTodoList()
+        viewModel.clearList()
+        listAdapter.clearList()
         for (data: TodoData in items){
             if (data.targetDate == timeConv){
                 viewModel.addDisplayItem(data)
                 listAdapter.addItem(data)
             }
-
         }
     }
 
