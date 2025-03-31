@@ -6,11 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.main.prodapp.databinding.FragmentSettingBinding
 
 private const val TAG = "SettingFragment"
 
 class SettingFragment : Fragment() {
+    private lateinit var auth: FirebaseAuth
+
     private var _binding : FragmentSettingBinding? = null
     private val binding
         get() = checkNotNull(_binding) {
@@ -35,6 +41,10 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        auth = Firebase.auth
+        binding.signOut.setOnClickListener {
+            auth.signOut()
+        }
     }
 
     override fun onStart() {
