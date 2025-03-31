@@ -56,6 +56,10 @@ object FirebaseService {
         return snapshot?.toObjects<Task>() ?: emptyList()
     }
 
+    suspend fun updateGameData(data: HashMap<String, Any>) {
+        db.collection("users").document(auth.currentUser?.uid!!).update(data)
+    }
+
     suspend fun addTask(task : Task): String {
         val tasksCollection = getTasksCollectionRef()
         val docRef = tasksCollection?.add(task)?.await()

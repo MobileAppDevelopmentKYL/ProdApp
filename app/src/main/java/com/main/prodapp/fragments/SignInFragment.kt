@@ -13,6 +13,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.main.prodapp.R
+import com.main.prodapp.database.CharacterRepo
 import com.main.prodapp.database.Task
 import com.main.prodapp.database.TodoData
 import com.main.prodapp.database.TodoListDatabase
@@ -61,7 +62,17 @@ class SignInFragment : Fragment(), View.OnClickListener {
         val currentUser = auth.currentUser
 
         if (currentUser != null) {
-            findNavController().navigate(R.id.show_inbox)
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                val userData = FirebaseService.getUserData()
+
+                Log.d("SIGN", userData.toString())
+
+                CharacterRepo.xp = userData?.xp ?: 0
+                CharacterRepo.level = userData?.level ?: 1
+
+                findNavController().navigate(R.id.show_inbox)
+            }
         }
     }
 
@@ -96,10 +107,17 @@ class SignInFragment : Fragment(), View.OnClickListener {
         val database = TodoListDatabase.getInstance(requireActivity())
         Log.d("SIGN", "Begin Load")
         viewLifecycleOwner.lifecycleScope.launch {
-            Log.d("SIGN", "Begin Launch")
+
+            val userData = FirebaseService.getUserData()
+
+            CharacterRepo.xp = userData?.xp ?: 0
+            CharacterRepo.level = userData?.level ?: 1
+
+            Log.d("SIGN", userData.toString())
+
             FirebaseService.createUserData(UserData())
             val tasks = FirebaseService.getCurrentUserTasks()
-//                var filePath: String? = null
+
 
             for (task in tasks) {
                 var filePath: String? = null

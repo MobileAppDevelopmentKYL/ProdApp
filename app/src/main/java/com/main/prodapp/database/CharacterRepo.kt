@@ -1,6 +1,12 @@
 package com.main.prodapp.database
 
-object CharacterRepo{
+import androidx.lifecycle.viewmodel.viewModelFactory
+import com.main.prodapp.helpers.FirebaseService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+
+object CharacterRepo {
 
     private const val XP_MAX = 100
 
@@ -12,6 +18,11 @@ object CharacterRepo{
         if (xp >= XP_MAX){
             xp -= XP_MAX
             level++
+
+            // This is not a good implementation.
+            CoroutineScope(Dispatchers.IO).launch {
+                saveData()
+            }
         }
     }
 
@@ -21,6 +32,10 @@ object CharacterRepo{
         hashMap["level"] = level
 
         return hashMap
+    }
+
+    private suspend fun saveData() {
+        FirebaseService.updateGameData(getCharacterDataAsMap())
     }
 
 }
