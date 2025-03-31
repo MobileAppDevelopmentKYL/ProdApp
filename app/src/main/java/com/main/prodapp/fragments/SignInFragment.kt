@@ -124,7 +124,7 @@ class SignInFragment : Fragment(), View.OnClickListener {
                 if (task.imagePath != null) {
                     FirebaseService.loadImage(requireContext(), task.imagePath.toString())
                     filePath = File(requireContext().filesDir, task.imagePath!!).toString()
-                    delay(200L) // HOTFIX
+                    delay(300L) // HOTFIX
                 }
 
                 val todo = TodoData(taskID = task.id ?: "none",
