@@ -129,7 +129,6 @@ class TodoListFragment : Fragment() {
             val dateStr = binding.editDateButton.text.toString()
             if (title.isNotEmpty() && desc.isNotEmpty() && dateStr != "Select Date") {
 
-
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd")
                 val date = dateFormat.parse(dateStr)
 
@@ -227,23 +226,31 @@ class TodoListFragment : Fragment() {
             val newDescription = binding.editTextDes.text.toString()
             val dateVal = binding.editDateButton.toString()
 
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-            val date = dateFormat.parse(dateVal)
+            if (binding.editTextTitle.text.isNotEmpty() && newDescription.isNotEmpty() && dateVal != "Select Date") {
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd")
+                val date = dateFormat.parse(dateVal)
 
-            val timeConv: Long? = date?.time
+                val timeConv: Long? = date?.time
 
-            val newTodo = TodoData(todoData.taskID, todoData.title, newDescription, false, targetDate = timeConv)
+                val newTodo = TodoData(
+                    todoData.taskID,
+                    todoData.title,
+                    newDescription,
+                    false,
+                    targetDate = timeConv
+                )
 
-            viewLifecycleOwner.lifecycleScope.launch {
-                FirebaseService.updateTaskDescription(todoData.taskID, newDescription)
-                todoListViewModel.updateTodo(newTodo)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    FirebaseService.updateTaskDescription(todoData.taskID, newDescription)
+                    todoListViewModel.updateTodo(newTodo)
+                }
+
+                binding.updateButton.visibility = View.GONE
+                binding.buttonAdd.visibility = View.VISIBLE
+
+                binding.editTextTitle.setText("")
+                binding.editTextDes.setText("")
             }
-
-            binding.updateButton.visibility = View.GONE
-            binding.buttonAdd.visibility = View.VISIBLE
-
-            binding.editTextTitle.setText("")
-            binding.editTextDes.setText("")
         }
     }
 
