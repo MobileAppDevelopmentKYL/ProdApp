@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.firebase.firestore.FirebaseFirestore
 import com.main.prodapp.database.CharacterRepo
 import com.main.prodapp.databinding.FragmentCharacterBinding
 import kotlin.random.Random
@@ -15,8 +16,6 @@ private const val TAG = "CharacterFragment"
 
 class CharacterFragment : Fragment() {
     private var _binding : FragmentCharacterBinding? = null
-
-    private lateinit var characterRepo : CharacterRepo
 
     private val binding
         get() = checkNotNull(_binding) {
@@ -66,8 +65,6 @@ class CharacterFragment : Fragment() {
             binding.adventureDetail.text = "You gained ${outcome.xpChange} XP!"
 
             refreshPage()
-
-
         }
     }
 
@@ -91,7 +88,6 @@ class CharacterFragment : Fragment() {
             Adventure("You fought a goblin and lost! You are useless!", Random.nextInt(-10, -5)),
             Adventure("You fought a gold mine! Yay :)", Random.nextInt(10, 20)),
             Adventure("You achieved nothing and was useless!", Random.nextInt(-5, 0))
-
         )
 
         return outcomes.random()
