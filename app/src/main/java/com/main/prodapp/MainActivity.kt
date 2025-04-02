@@ -7,9 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.google.firebase.firestore.FirebaseFirestore
+import com.main.prodapp.database.TodoData
+import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.databinding.ActivityMainBinding
-import com.main.prodapp.viewModel.TodoListViewModel
+import com.main.prodapp.helpers.FirebaseService
+import kotlinx.coroutines.launch
 
 
 private const val TAG = "MainActivity"
@@ -18,7 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityMainBinding
 
-    private val todoListViewModel : TodoListViewModel by viewModels()
+    private lateinit var database: TodoListDatabase
+    private lateinit var db : FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavView.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.signInFragment) {
+            if (destination.id == R.id.signInFragment || destination.id == R.id.signUpFragment) {
                 binding.bottomNavView.visibility = View.GONE
             } else {
                 binding.bottomNavView.visibility = View.VISIBLE
@@ -63,6 +68,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
+
+//        lifecycleScope.launch {
+//            database.todoListDao().deleteAll()
+//        }
 
         Log.d(TAG, "Start onStop")
     }

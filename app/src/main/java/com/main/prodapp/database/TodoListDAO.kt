@@ -24,4 +24,7 @@ interface TodoListDAO {
 
     @Delete
     suspend fun removeTodo(todoData: TodoData)
+
+    @Query("DELETE FROM tododata")
+    suspend fun deleteAll()
 }

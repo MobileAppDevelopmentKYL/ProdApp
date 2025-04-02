@@ -5,6 +5,10 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/signInFragment">
 
+
+
+
+
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.main.prodapp.fragments.SignInFragment"
@@ -13,11 +17,14 @@
         <action
             android:id="@+id/show_inbox"
             app:destination="@id/todoFragment" />
+        <action
+            android:id="@+id/show_sign_up_page"
+            app:destination="@id/signUpFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/calendarFragment"
-        android:name="com.main.prodapp.fragments.CalendarFragment"
+        android:name="com.main.prodapp.fragments.calendar.CalendarFragment"
         android:label="fragment_calendar"
         tools:layout="@layout/fragment_calendar"/>
 
@@ -37,11 +44,35 @@
         android:id="@+id/profileFragment"
         android:name="com.main.prodapp.fragments.ProfileFragment"
         android:label="fragment_profile"
-        android:layout="@layout/fragment_profile"/>
+        android:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/transfer_to_character"
+            app:destination="@id/characterFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/characterFragment"
+        android:name="com.main.prodapp.fragments.CharacterFragment"
+        android:label="fragment_character"
+        tools:layout="@layout/fragment_character" />
 
     <fragment
         android:id="@+id/settingFragment"
         android:name="com.main.prodapp.fragments.SettingFragment"
         android:label="fragment_setting"
-        android:layout="@layout/fragment_setting"/>
+        android:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_settingFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="com.main.prodapp.fragments.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/show_inbox"
+            app:destination="@id/todoFragment" />
+    </fragment>
 </navigation>

@@ -14,6 +14,7 @@
     <string name="sign_out">Sign Out</string>
     <string name="email_hint">Enter Email</string>
     <string name="password_hint">Enter Password</string>
+    <string name="confirm_password_hint">Re-enter Password</string>
 
     <string name="todo_list_icon_name">List</string>
 

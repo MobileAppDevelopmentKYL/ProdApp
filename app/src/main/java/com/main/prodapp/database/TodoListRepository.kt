@@ -16,13 +16,7 @@ private constructor(
     private val coroutineScope : CoroutineScope = GlobalScope
 ) {
 
-    private val database: TodoListDatabase = Room
-        .databaseBuilder(
-            context.applicationContext,
-            TodoListDatabase::class.java,
-            DATABASE_NAME
-        )
-        .build()
+    private val database = TodoListDatabase.getInstance(context.applicationContext)
 
     fun getTodoList(): Flow<List<TodoData>> = database.todoListDao().getTodoList()
     suspend fun getTodoItem(title: String): TodoData = database.todoListDao().getTodoItem(title)
@@ -39,6 +33,10 @@ private constructor(
 
     suspend fun removeTodo(todoData: TodoData) {
         database.todoListDao().removeTodo(todoData)
+    }
+
+    suspend fun deleteAll(todoData: TodoData) {
+        database.todoListDao().deleteAll()
     }
 
     companion object {
