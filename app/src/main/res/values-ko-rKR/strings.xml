@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ProdApp</string>
+
+    <!--Nav bar -->
+    <string name="calendar_icon_name">달력</string>
+    <string name="inbox_icon_name">편지함</string>
+    <string name="profile_icon_name">프로필</string>
+    <string name="setting_icon_name">설정</string>
+
+    <!-- Sign In/Sign Up/Sign Out -->
+    <string name="sign_in">로그인</string>
+    <string name="sign_up">회원가입</string>
+    <string name="sign_out">로그아웃</string>
+    <string name="email_hint">이메일 입력</string>
+    <string name="password_hint">비밀번호 입력</string>
+    <string name="confirm_password_hint">비밀번호 재입력</string>
+
+    <string name="todo_list_icon_name">목록</string>
+    <string name="new_item">새 항목</string>
+
+
+</resources>
