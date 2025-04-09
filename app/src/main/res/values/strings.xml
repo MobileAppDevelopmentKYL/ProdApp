@@ -27,4 +27,14 @@
     <string name="todo_add">Add</string>
     <string name="todo_update">Update</string>
 
+
+    <!--list item -->
+    <string name="camera">Capture</string>
+    <string name="checkbox_list">Mark as done</string>
+
+
+    <!--settings -->
+    <string name="setting_signout">SIGN OUT</string>
+
+
 </resources>

@@ -28,5 +28,18 @@
     <string name="todo_update">업데이트</string>
 
 
+    <!--list item -->
+    <string name="camera">카메라</string>
+    <string name="checkbox_list">완료 체크박스</string>
+
+    <!--settings -->
+    <string name="setting_signout">로그아웃</string>
+
+
+    <!--calendar -->
+
+
+
+
 
 </resources>
