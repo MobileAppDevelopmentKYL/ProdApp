@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
+import com.main.prodapp.R
 import com.main.prodapp.database.CharacterRepo
 import com.main.prodapp.databinding.FragmentCharacterBinding
 import kotlin.random.Random
@@ -42,10 +43,14 @@ class CharacterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val data = CharacterRepo.getCharacterDataAsMap()
-        binding.characterLevel.text = "Level: ${data["level"]}"
-        binding.characterXp.text = "XP: ${data["xp"]}/100"
-        binding.characterHealth.text = "Health: ${data["level"] as Int * 12}"
-        binding.characterStrength.text = "Strength: ${data["level"] as Int * 15}"
+        val levelName = getString(R.string.character_level)
+        val xpName = getString(R.string.character_xp)
+        val health = getString(R.string.character_health)
+        val strength = getString(R.string.character_strength)
+        binding.characterLevel.text = levelName + ": ${data["level"]}"
+        binding.characterXp.text = xpName + ": ${data["xp"]}/100"
+        binding.characterHealth.text = health + ": ${data["level"] as Int * 12}"
+        binding.characterStrength.text = strength + ": ${data["level"] as Int * 15}"
 
 
         binding.adventureButton.setOnClickListener{
@@ -74,10 +79,15 @@ class CharacterFragment : Fragment() {
         val level = charData["level"] as Int
         val xp = charData["xp"] as Int
 
-        binding.characterLevel.text = "Level: ${level}"
-        binding.characterXp.text = "XP: ${charData["xp"]}/100"
-        binding.characterHealth.text = "Health: ${level * 12}"
-        binding.characterStrength.text = "Strength: ${level * 15}"
+        val levelName = getString(R.string.character_level)
+        val xpName = getString(R.string.character_xp)
+        val health = getString(R.string.character_health)
+        val strength = getString(R.string.character_strength)
+
+        binding.characterLevel.text = levelName + ": ${level}"
+        binding.characterXp.text = xpName + ": ${charData["xp"]}/100"
+        binding.characterHealth.text = health + ": ${level * 12}"
+        binding.characterStrength.text = strength + ": ${level * 15}"
 
     }
 

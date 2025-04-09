@@ -61,6 +61,15 @@
     <string name="calendar_things_please">Please Select a Date</string>
 
 
+    <!--character -->
+    <string name="character_level">Level</string>
+    <string name="character_xp">XP</string>
+    <string name="character_health">Health</string>
+    <string name="character_strength">Strength</string>
+
+    <string name="character_adventure">Adventure</string>
+
+
 
 
 </resources>
