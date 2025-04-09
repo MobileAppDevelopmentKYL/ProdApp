@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SignInFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"></LinearLayout>
+
     <TextView
         android:id="@+id/sign_up_title"
         android:layout_width="wrap_content"
@@ -58,5 +63,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sign_in_button"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/sign_in_korean_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="54dp"
+            tools:layout_editor_absoluteY="550dp"
+            android:contentDescription="Korean"
+            android:src="@drawable/account_icon" />
+
+        <ImageButton
+            android:id="@+id/sign_in_english_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:layout_editor_absoluteX="54dp"
+            tools:layout_editor_absoluteY="550dp"
+            android:contentDescription="English"
+            android:src="@drawable/baseline_arrow_back_24" />
+
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

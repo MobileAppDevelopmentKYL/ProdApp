@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ProdApp</string>
+    <string name="app_name">생산성 앱</string>
 
     <!--Nav bar -->
     <string name="calendar_icon_name">달력</string>
