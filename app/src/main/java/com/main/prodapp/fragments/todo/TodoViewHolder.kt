@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 class TodoViewHolder (
-    private val binding: ListItemTodoBinding,
+    val binding: ListItemTodoBinding,
     private val onDelete: (TodoData) -> Unit,
     private val onUpdate: (TodoData) -> Unit,
     private val onCapture: (TodoData) -> Unit): RecyclerView.ViewHolder(binding.root) {
@@ -31,7 +31,6 @@ class TodoViewHolder (
 
         }
 
-
         binding.root.setOnClickListener {
             onUpdate(todoData)
         }
@@ -46,10 +45,6 @@ class TodoViewHolder (
         binding.buttonCapture.setOnClickListener {
             onCapture(todoData)
         }
-
-
-
-
 
         if(!todoData.imagePath.isNullOrEmpty()){
             val imageFile = File(todoData.imagePath)
