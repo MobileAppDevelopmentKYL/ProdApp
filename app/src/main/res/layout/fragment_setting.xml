@@ -33,21 +33,29 @@
 
             <ImageButton
                 android:id="@+id/sign_in_korean_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 tools:layout_editor_absoluteX="54dp"
-                tools:layout_editor_absoluteY="550dp"
+                tools:layout_editor_absoluteY="54dp"
                 android:contentDescription="Korean"
-                android:src="@drawable/account_icon" />
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:layout_margin="5dp"
+                android:src="@drawable/korea_flag" />
 
             <ImageButton
                 android:id="@+id/sign_in_english_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 tools:layout_editor_absoluteX="54dp"
-                tools:layout_editor_absoluteY="550dp"
+                tools:layout_editor_absoluteY="54dp"
                 android:contentDescription="English"
-                android:src="@drawable/baseline_arrow_back_24" />
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:layout_margin="10dp"
+                android:src="@drawable/usa_flag" />
         </LinearLayout>
 
     </LinearLayout>
