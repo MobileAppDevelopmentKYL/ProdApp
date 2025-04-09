@@ -37,6 +37,30 @@
 
 
     <!--calendar -->
+    <string name="prev_calendar">이전</string>
+    <string name="next_calendar">다음</string>
+    <string name="init_march">3월 2025</string>
+
+    <!--calendar days -->
+    <string name="monday">월</string>
+    <string name="tuesday">화</string>
+    <string name="wednesday">수</string>
+    <string name="thursday">목</string>
+    <string name="friday">금</string>
+    <string name="saturday">토</string>
+    <string name="sunday">일</string>
+
+    <string name="calendar_todo">끝내야 할 아이템:</string>
+
+    <!--calendar item -->
+    <string name="calendar_item_title">캘린더 아이템 제목</string>
+    <string name="calendar_item_desc">캘린더 아이템 설명</string>
+
+    <!--calendar cell -->
+    <string name="calendar_things_todo_on">해야할것</string>
+    <string name="calendar_things_please">날짜를 골라주세요</string>
+
+
 
 
 
