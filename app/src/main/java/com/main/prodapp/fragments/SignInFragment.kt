@@ -1,5 +1,6 @@
 package com.main.prodapp.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -113,6 +114,10 @@ class SignInFragment : Fragment(), View.OnClickListener {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
+
+
+                        LocaleHelper.setEnglish(requireContext())
+                        requireActivity().recreate()
                         loadUserData()
                     } else {
                         Toast.makeText(context,"Authentication failed.",Toast.LENGTH_SHORT,).show()

@@ -17,6 +17,7 @@ import com.main.prodapp.database.CharacterRepo
 import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.databinding.FragmentSettingBinding
 import com.main.prodapp.helpers.FirebaseService
+import com.main.prodapp.helpers.LocaleHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -62,6 +63,9 @@ class SettingFragment : Fragment() {
                 database.todoListDao().deleteAll()
 
                 auth.signOut()
+
+                LocaleHelper.setEnglish(requireContext())
+                requireActivity().recreate()
                 findNavController().navigate(R.id.action_settingFragment_to_signInFragment)
             }
         }
