@@ -69,6 +69,20 @@ class SettingFragment : Fragment() {
                 findNavController().navigate(R.id.action_settingFragment_to_signInFragment)
             }
         }
+
+        binding.signInKoreanButton.setOnClickListener{
+            LocaleHelper.setKorean(requireContext())
+            LocaleHelper.updateLocale(requireContext(), language = "ko", country = "KR")
+            requireActivity().recreate()
+        }
+
+        binding.signInEnglishButton.setOnClickListener{
+
+            LocaleHelper.setEnglish(requireContext())
+            LocaleHelper.updateLocale(requireContext(), language = "en", country = "US")
+            requireActivity().recreate()
+
+        }
     }
 
     override fun onStart() {

@@ -20,4 +20,11 @@
 
     <string name="new_item">New Item</string>
 
+    <!--Todolist -->
+    <string name="todo_title">Title</string>
+    <string name="todo_detail">Detail</string>
+    <string name="todo_select_date">Select Date</string>
+    <string name="todo_add">Add</string>
+    <string name="todo_update">Update</string>
+
 </resources>

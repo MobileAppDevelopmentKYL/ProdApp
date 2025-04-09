@@ -20,4 +20,13 @@
     <string name="new_item">새 항목</string>
 
 
+    <!--Todolist -->
+    <string name="todo_title">제목</string>
+    <string name="todo_detail">디테일</string>
+    <string name="todo_select_date">디테일</string>
+    <string name="todo_add">추가</string>
+    <string name="todo_update">업데이트</string>
+
+
+
 </resources>
