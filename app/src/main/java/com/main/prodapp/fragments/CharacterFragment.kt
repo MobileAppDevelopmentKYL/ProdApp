@@ -67,7 +67,8 @@ class CharacterFragment : Fragment() {
             }
 
             binding.adventureOutcome.text = outcome.message
-            binding.adventureDetail.text = "You gained ${outcome.xpChange} XP!"
+            val gained = getString(R.string.character_gained_text)
+            binding.adventureDetail.text = gained + " ${outcome.xpChange} XP!"
 
             refreshPage()
         }
@@ -93,11 +94,17 @@ class CharacterFragment : Fragment() {
 
 
     private fun adventureStart(): Adventure{
+
+        val adventureDragon = getString(R.string.adventure_dragon)
+        val adventureGoblin = getString(R.string.adventure_goblin)
+        val adventureGold = getString(R.string.adventure_gold)
+        val adventureUseless = getString(R.string.adventure_useless)
+
         val outcomes = listOf(
-            Adventure("You fought a dragon and won!", Random.nextInt(5, 15)),
-            Adventure("You fought a goblin and lost! You are useless!", Random.nextInt(-10, -5)),
-            Adventure("You fought a gold mine! Yay :)", Random.nextInt(10, 20)),
-            Adventure("You achieved nothing and was useless!", Random.nextInt(-5, 0))
+            Adventure(adventureDragon, Random.nextInt(5, 15)),
+            Adventure(adventureGoblin, Random.nextInt(-10, -5)),
+            Adventure(adventureGold, Random.nextInt(10, 20)),
+            Adventure(adventureUseless, Random.nextInt(-5, 0))
         )
 
         return outcomes.random()

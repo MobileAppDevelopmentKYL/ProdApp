@@ -70,6 +70,16 @@
     <string name="character_adventure">Adventure</string>
 
 
+    <string name="adventure_dragon">You fought a dragon and won!</string>
+    <string name="adventure_goblin">You fought a goblin and lost! You are useless!</string>
+    <string name="adventure_gold">You fought a gold mine! Yay :)</string>
+    <string name="adventure_useless">You achieved nothing and was useless!</string>
+
+
+    <string name="character_gained_text">You gained</string>
+
+
+
 
 
 </resources>

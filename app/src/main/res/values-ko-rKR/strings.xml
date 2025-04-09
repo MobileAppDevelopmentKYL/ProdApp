@@ -70,6 +70,15 @@
     <string name="character_adventure">여행</string>
 
 
+    <string name="adventure_dragon">드래곤이랑 싸워서 이겼습니다!</string>
+    <string name="adventure_goblin">고블린이랑 싸워서 졌습니다! 쓸모가 없네여!</string>
+    <string name="adventure_gold">금광을 찾았습니다!</string>
+    <string name="adventure_useless">쓸모가 없었어여!</string>
+
+
+    <string name="character_gained_text">마법을 얻었습니다!</string>
+
+
 
 
 
