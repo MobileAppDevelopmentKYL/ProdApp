@@ -10,8 +10,7 @@ import kotlinx.coroutines.launch
 
 private const val DATABASE_NAME = "todolist_database"
 
-class TodoListRepository @OptIn(DelicateCoroutinesApi::class)
-private constructor(
+class TodoListRepository @OptIn(DelicateCoroutinesApi::class) constructor(
     context: Context,
     private val coroutineScope : CoroutineScope = GlobalScope
 ) {

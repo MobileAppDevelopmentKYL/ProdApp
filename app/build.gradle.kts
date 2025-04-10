@@ -55,6 +55,8 @@ android {
 dependencies {
 
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.runner)
+    implementation(libs.androidx.fragment.testing)
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 
     implementation(libs.androidx.core.ktx)

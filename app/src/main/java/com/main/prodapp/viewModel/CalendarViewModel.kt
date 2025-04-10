@@ -16,19 +16,19 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-private const val TAG = "CalendarViewModel"
+//private const val TAG = "CalendarViewModel"
 
 class CalendarViewModel(
-    private val todoListRepo: TodoListRepository = TodoListRepository.get()
+    private val todoListRepo: TodoListRepository? = TodoListRepository.get()
 ) : ViewModel() {
     private val _todoList: MutableStateFlow<List<TodoData>> = MutableStateFlow(emptyList())
-    val todoList: StateFlow<List<TodoData>> = _todoList.asStateFlow()
+    private val todoList: StateFlow<List<TodoData>> = _todoList.asStateFlow()
     private var displayedList: List<TodoData> = emptyList()
 
     init {
-        Log.d(TAG, "ViewModel instance created")
+        //Log.d(TAG, "ViewModel instance created")
         viewModelScope.launch {
-            todoListRepo.getTodoList().collect {
+            todoListRepo?.getTodoList()?.collect {
                 _todoList.value = it
             }
         }
@@ -46,7 +46,7 @@ class CalendarViewModel(
     @RequiresApi(Build.VERSION_CODES.O)
     fun updateSelectedDate(newDate: LocalDate) {
         _selectedDate.value = newDate
-        Log.d(TAG, newDate.toString())
+        //Log.d(TAG, newDate.toString())
     }
 
     fun addDisplayItem(data: TodoData){
