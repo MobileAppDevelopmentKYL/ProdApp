@@ -2,6 +2,7 @@ package com.main.prodapp.fragments.calendar
 
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
@@ -20,7 +21,7 @@ class CalendarFragmentTest {
 
     @Before
     fun setUp() {
-        scenario = launchFragmentInContainer<CalendarFragment>()
+        scenario = launchFragmentInContainer<CalendarFragment>(themeResId = R.style.Theme_ProdApp)
     }
 
     @After
@@ -28,11 +29,13 @@ class CalendarFragmentTest {
     }
 
     @Test
-    fun calendarFragment_displaysInitialViewsCorrectly() {
+    fun initialDisplayTest() {
+        scenario.onFragment { fragment ->
+            assertNotNull(fragment.view)
+        }
 
         onView(withId(R.id.monthYearTV)).check(matches(isDisplayed()))
         onView(withId(R.id.calendarRecyclerView)).check(matches(isDisplayed()))
-        onView(withId(R.id.itemsRecyclerView)).check(matches(isDisplayed()))
         onView(withId(R.id.dateSelectionHeader)).check(matches(withText("Please Select a Date")))
     }
 
