@@ -25,6 +25,9 @@
       <SelectionState runConfigName="SignInFragmentTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+      <SelectionState runConfigName="clickingSignUpButton_navigatesToSignUpPage()">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
     </selectionStates>
   </component>
 </project>
