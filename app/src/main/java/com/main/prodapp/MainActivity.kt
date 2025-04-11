@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : LocaleActivity() {
 
     private lateinit var binding : ActivityMainBinding
 

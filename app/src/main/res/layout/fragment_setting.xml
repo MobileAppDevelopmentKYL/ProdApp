@@ -6,15 +6,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/sign_out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign Out"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/sign_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_signout" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/sign_in_korean_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                tools:layout_editor_absoluteX="54dp"
+                tools:layout_editor_absoluteY="54dp"
+                android:contentDescription="Korean"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:layout_margin="5dp"
+                android:src="@drawable/korea_flag" />
+
+            <ImageButton
+                android:id="@+id/sign_in_english_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                tools:layout_editor_absoluteX="54dp"
+                tools:layout_editor_absoluteY="54dp"
+                android:contentDescription="English"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:background="@null"
+                android:layout_margin="10dp"
+                android:src="@drawable/usa_flag" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

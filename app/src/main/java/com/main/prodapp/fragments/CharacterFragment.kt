@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.firebase.firestore.FirebaseFirestore
+import com.main.prodapp.R
 import com.main.prodapp.database.CharacterRepo
 import com.main.prodapp.databinding.FragmentCharacterBinding
 import kotlin.random.Random
@@ -42,10 +43,14 @@ class CharacterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val data = CharacterRepo.getCharacterDataAsMap()
-        binding.characterLevel.text = "Level: ${data["level"]}"
-        binding.characterXp.text = "XP: ${data["xp"]}/100"
-        binding.characterHealth.text = "Health: ${data["level"] as Int * 12}"
-        binding.characterStrength.text = "Strength: ${data["level"] as Int * 15}"
+        val levelName = getString(R.string.character_level)
+        val xpName = getString(R.string.character_xp)
+        val health = getString(R.string.character_health)
+        val strength = getString(R.string.character_strength)
+        binding.characterLevel.text = levelName + ": ${data["level"]}"
+        binding.characterXp.text = xpName + ": ${data["xp"]}/100"
+        binding.characterHealth.text = health + ": ${data["level"] as Int * 12}"
+        binding.characterStrength.text = strength + ": ${data["level"] as Int * 15}"
 
 
         binding.adventureButton.setOnClickListener{
@@ -62,7 +67,8 @@ class CharacterFragment : Fragment() {
             }
 
             binding.adventureOutcome.text = outcome.message
-            binding.adventureDetail.text = "You gained ${outcome.xpChange} XP!"
+            val gained = getString(R.string.character_gained_text)
+            binding.adventureDetail.text = gained + " ${outcome.xpChange} XP!"
 
             refreshPage()
         }
@@ -74,20 +80,31 @@ class CharacterFragment : Fragment() {
         val level = charData["level"] as Int
         val xp = charData["xp"] as Int
 
-        binding.characterLevel.text = "Level: ${level}"
-        binding.characterXp.text = "XP: ${charData["xp"]}/100"
-        binding.characterHealth.text = "Health: ${level * 12}"
-        binding.characterStrength.text = "Strength: ${level * 15}"
+        val levelName = getString(R.string.character_level)
+        val xpName = getString(R.string.character_xp)
+        val health = getString(R.string.character_health)
+        val strength = getString(R.string.character_strength)
+
+        binding.characterLevel.text = levelName + ": ${level}"
+        binding.characterXp.text = xpName + ": ${charData["xp"]}/100"
+        binding.characterHealth.text = health + ": ${level * 12}"
+        binding.characterStrength.text = strength + ": ${level * 15}"
 
     }
 
 
     private fun adventureStart(): Adventure{
+
+        val adventureDragon = getString(R.string.adventure_dragon)
+        val adventureGoblin = getString(R.string.adventure_goblin)
+        val adventureGold = getString(R.string.adventure_gold)
+        val adventureUseless = getString(R.string.adventure_useless)
+
         val outcomes = listOf(
-            Adventure("You fought a dragon and won!", Random.nextInt(5, 15)),
-            Adventure("You fought a goblin and lost! You are useless!", Random.nextInt(-10, -5)),
-            Adventure("You fought a gold mine! Yay :)", Random.nextInt(10, 20)),
-            Adventure("You achieved nothing and was useless!", Random.nextInt(-5, 0))
+            Adventure(adventureDragon, Random.nextInt(5, 15)),
+            Adventure(adventureGoblin, Random.nextInt(-10, -5)),
+            Adventure(adventureGold, Random.nextInt(10, 20)),
+            Adventure(adventureUseless, Random.nextInt(-5, 0))
         )
 
         return outcomes.random()

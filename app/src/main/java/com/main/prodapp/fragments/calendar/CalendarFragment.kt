@@ -56,7 +56,7 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
         super.onViewCreated(view, savedInstanceState)
         initWidgets()
         setMonthView(viewModel.selectedDate.value!!)
-        binding.dateSelectionHeader.text = "Please Select a Date"
+        binding.dateSelectionHeader.text = getString(R.string.calendar_things_please)
 
         binding.prevMonthButton.setOnClickListener { previousMonthAction() }
         binding.nextMonthButton.setOnClickListener { nextMonthAction() }
@@ -171,7 +171,7 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
     }
 
     private fun displayDateSelected(date: LocalDate){
-        binding.dateSelectionHeader.text = "Things to do on"
+        binding.dateSelectionHeader.text = getString(R.string.calendar_things_todo_on)
         binding.dateSelected.text=date.toString()
     }
 
