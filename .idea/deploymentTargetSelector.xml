@@ -13,19 +13,19 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="CalendarFragmentTest">
+      <SelectionState runConfigName="initialDisplayTest()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="prevClickTest()">
+      <SelectionState runConfigName="initialDisplayTest() (1)">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="calendarFragment_clickDay_updatesDateSelection()">
+      <SelectionState runConfigName="datePickerTest()">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="nextClickTest()">
+      <SelectionState runConfigName="CalendarFragmentTest (1)">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="dateSelectionDisplayTest()">
+      <SelectionState runConfigName="TodoListFragmentTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

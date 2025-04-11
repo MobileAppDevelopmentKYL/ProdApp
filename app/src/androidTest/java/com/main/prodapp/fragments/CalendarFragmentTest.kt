@@ -1,11 +1,8 @@
-package com.main.prodapp.fragments.calendar
+package com.main.prodapp.fragments
 
 import android.icu.text.SimpleDateFormat
-import androidx.compose.ui.text.intl.Locale
 import androidx.fragment.app.testing.FragmentScenario
 import androidx.fragment.app.testing.launchFragmentInContainer
-import androidx.recyclerview.widget.RecyclerView
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
@@ -13,10 +10,9 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.google.type.Date
 import com.main.prodapp.R
+import com.main.prodapp.fragments.calendar.CalendarFragment
 import org.hamcrest.Matchers.allOf
-import org.junit.Assert.*
 
 import org.junit.After
 import org.junit.Before
