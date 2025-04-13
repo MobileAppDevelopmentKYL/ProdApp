@@ -72,13 +72,12 @@ class ProfileFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-
         Log.d(TAG, "Start onDestroy")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-
+        _binding = null
         Log.d(TAG, "Start onDestoryView")
     }
 }
