@@ -38,7 +38,6 @@ private const val TAG = "TodoListFragment"
 
 class TodoListFragment : Fragment() {
 
-    private lateinit var todoRecyclerView: RecyclerView
     private var currentFilePath: String? = null
 
     private val todoListViewModel: TodoListViewModel by viewModels {
