@@ -55,6 +55,9 @@ android {
 dependencies {
 
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.androidx.runner)
+    implementation(libs.androidx.fragment.testing)
+    implementation(libs.androidx.navigation.testing)
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.4")
 
     implementation(libs.androidx.core.ktx)
@@ -88,5 +91,10 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation (libs.androidx.appcompat)
     implementation (libs.material.v150)
+    androidTestImplementation(libs.androidx.espresso.contrib)
+    testImplementation(libs.hamcrest)
+    androidTestImplementation(libs.hamcrest)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
 
 }
