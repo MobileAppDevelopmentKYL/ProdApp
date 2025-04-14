@@ -25,7 +25,6 @@ private const val TAG = "SettingFragment"
 
 class SettingFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
-    private lateinit var firebaseFirestore: FirebaseFirestore
     private lateinit var database: TodoListDatabase
 
     private var _binding : FragmentSettingBinding? = null
@@ -117,7 +116,7 @@ class SettingFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
+        _binding = null
         Log.d(TAG, "Start onDestoryView")
     }
 }

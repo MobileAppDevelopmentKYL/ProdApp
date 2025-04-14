@@ -34,6 +34,7 @@ import id.zelory.compressor.constraint.resolution
 
 import kotlinx.coroutines.launch
 import java.io.File
+import java.lang.String.format
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
@@ -45,7 +46,6 @@ private const val TAG = "TodoListFragment"
 
 class TodoListFragment : Fragment() {
 
-    private lateinit var todoRecyclerView: RecyclerView
     private var currentFilePath: String? = null
 
     private val todoListViewModel: TodoListViewModel by viewModels {
@@ -68,6 +68,7 @@ class TodoListFragment : Fragment() {
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success) {
             currentTodoData?.let { todoData ->
+
                 viewLifecycleOwner.lifecycleScope.launch {
 
                     val compressedFile =
@@ -222,6 +223,8 @@ class TodoListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+
+        _binding = null
 
         Log.d(TAG, "Start onDestoryView")
     }

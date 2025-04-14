@@ -147,7 +147,7 @@ class CharacterFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
+        _binding = null
         Log.d(TAG, "Start onDestoryView")
     }
 }

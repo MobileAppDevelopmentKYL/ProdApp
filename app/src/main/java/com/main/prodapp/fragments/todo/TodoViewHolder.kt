@@ -59,8 +59,5 @@ class TodoViewHolder (
         }else{
             binding.imageView2.visibility = View.GONE
         }
-
-
-
     }
 }
