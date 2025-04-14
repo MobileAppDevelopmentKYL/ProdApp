@@ -88,5 +88,5 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation (libs.androidx.appcompat)
     implementation (libs.material.v150)
-
+    implementation(libs.compressor)
 }
