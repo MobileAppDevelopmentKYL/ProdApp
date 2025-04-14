@@ -2,6 +2,7 @@ package com.main.prodapp.fragments.todo
 
 
 import android.app.DatePickerDialog
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,12 @@ import com.main.prodapp.databinding.FragmentTodoListBinding
 import com.main.prodapp.helpers.FirebaseService
 import com.main.prodapp.viewModel.TodoListViewModel
 import com.main.prodapp.viewModel.TodoListViewModelFactory
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.destination
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+
 import kotlinx.coroutines.launch
 import java.io.File
 import java.text.SimpleDateFormat
@@ -61,17 +68,36 @@ class TodoListFragment : Fragment() {
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success) {
             currentTodoData?.let { todoData ->
-                todoData.imagePath = currentFilePath
-
-                FirebaseService.uploadImage(currentFilePath ?: "none", storage)
-
                 viewLifecycleOwner.lifecycleScope.launch {
-                    FirebaseService.updateTaskImage(todoData.taskID, currentFilePath ?: "none")
+
+                    val compressedFile =
+                        Compressor.compress(requireContext(), File(currentFilePath!!)) {
+                            quality(80)
+                            format(Bitmap.CompressFormat.JPEG)
+                            resolution(1024, 1024)
+                            destination(
+                                File(
+                                    requireContext().cacheDir,
+                                    "compressed_${System.currentTimeMillis()}.jpg"
+                                )
+                            )
+                        }
+
+                    Log.d(TAG, "FILE: " + compressedFile.absolutePath)
+
+                    FirebaseService.uploadImage(compressedFile.absolutePath ?: "none", storage)
+                    FirebaseService.updateTaskImage(
+                        todoData.taskID,
+                        compressedFile.absolutePath ?: "none"
+                    )
+
+                    todoData.imagePath = compressedFile.absolutePath
+
+                    updateDataWithImage(todoData)
+
+                    adapter.notifyDataSetChanged()
                 }
-
-                updateDataWithImage(todoData)
             }
-
         }
     }
 

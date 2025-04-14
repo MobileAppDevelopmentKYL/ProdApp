@@ -91,10 +91,10 @@ dependencies {
     ksp(libs.androidx.room.compiler)
     implementation (libs.androidx.appcompat)
     implementation (libs.material.v150)
+    implementation(libs.compressor)
     androidTestImplementation(libs.androidx.espresso.contrib)
     testImplementation(libs.hamcrest)
     androidTestImplementation(libs.hamcrest)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.robolectric)
-
 }
