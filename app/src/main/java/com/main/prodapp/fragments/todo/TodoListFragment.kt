@@ -67,6 +67,7 @@ class TodoListFragment : Fragment() {
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success) {
             currentTodoData?.let { todoData ->
+
                 todoData.imagePath = currentFilePath
 
                 FirebaseService.uploadImage(currentFilePath ?: "none", storage)
@@ -76,8 +77,26 @@ class TodoListFragment : Fragment() {
                 }
 
                 updateDataWithImage(todoData)
-            }
 
+//                viewLifecycleOwner.lifecycleScope.launch {
+//
+//                    val compressedFile = Compressor.compress(requireContext(), File(currentFilePath!!)) {
+//                        quality(80)
+//                        format(Bitmap.CompressFormat.JPEG)
+//                        resolution(1024, 1024)
+//                        destination(File(requireContext().cacheDir, "compressed_${System.currentTimeMillis()}.jpg"))
+//                    }
+//
+//                    Log.d(TAG, "FILE: " + compressedFile.absolutePath)
+//
+//                    FirebaseService.uploadImage(compressedFile.absolutePath ?: "none", storage)
+//                    FirebaseService.updateTaskImage(todoData.taskID, compressedFile.absolutePath ?: "none")
+//
+//                    todoData.imagePath = compressedFile.absolutePath
+//
+//                    updateDataWithImage(todoData)
+//                }
+            }
         }
     }
 
