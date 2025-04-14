@@ -100,6 +100,7 @@ class TodoListFragment : Fragment() {
         _binding = FragmentTodoListBinding.inflate(inflater, container, false)
 
         binding.todoRecyclerView.layoutManager = LinearLayoutManager(context)
+
         adapter = TodoListAdapter(
             emptyList(),
             onDelete = { todoData -> deleteTodoItem(todoData) },
@@ -157,18 +158,11 @@ class TodoListFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 todoListViewModel.todoList.collect { todoList ->
-                    binding.todoRecyclerView.adapter =
-                        TodoListAdapter(
-                            todoList,
-                            onDelete = { todoData -> deleteTodoItem(todoData) },
-                            onUpdate = { todoData -> updateData(todoData) },
-                            onCapture = { todoData -> captureImage(todoData)}
-                        )
+                    adapter.updateTodoList(todoList)
                 }
             }
         }
     }
-
 
     override fun onStart() {
         super.onStart()

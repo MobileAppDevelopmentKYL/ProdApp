@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.ListItemTodoBinding
 
-class TodoListAdapter (
+class TodoListAdapter(
     private var todo: List<TodoData>,
     private var onDelete: (TodoData) -> Unit,
     private var onUpdate: (TodoData) -> Unit,
@@ -24,4 +24,9 @@ class TodoListAdapter (
     }
 
     override fun getItemCount() = todo.size
+
+    fun updateTodoList(newTodoList: List<TodoData>) {
+        todo = newTodoList
+        notifyDataSetChanged()  // Should use DiffUtil
+    }
 }
