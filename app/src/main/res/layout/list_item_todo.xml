@@ -33,7 +33,7 @@
                 android:id="@+id/buttonCapture"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Capture" />
+                android:text="@string/camera" />
 
             <TextView
                 android:id="@+id/todoTitleText"
@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
 
-                android:text="Mark as done" />
+                android:text="@string/checkbox_list" />
 
             <ImageView
                 android:id="@+id/imageView2"
