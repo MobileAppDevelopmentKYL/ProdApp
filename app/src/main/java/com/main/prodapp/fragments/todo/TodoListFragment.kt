@@ -68,16 +68,6 @@ class TodoListFragment : Fragment() {
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success) {
             currentTodoData?.let { todoData ->
-//                todoData.imagePath = currentFilePath
-//
-//                FirebaseService.uploadImage(currentFilePath ?: "none", storage)
-//
-//                viewLifecycleOwner.lifecycleScope.launch {
-//                    FirebaseService.updateTaskImage(todoData.taskID, currentFilePath ?: "none")
-//                }
-//
-//                updateDataWithImage(todoData)
-
                 viewLifecycleOwner.lifecycleScope.launch {
 
                     val compressedFile =
