@@ -56,6 +56,10 @@ class CalendarViewModel(
     fun clearList(){
         displayedList = emptyList()
     }
+
+    fun getDisplayedList(): List<TodoData> {
+        return displayedList
+    }
 }
 
 

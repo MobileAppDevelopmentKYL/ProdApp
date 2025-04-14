@@ -17,28 +17,53 @@ import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 
+@RunWith(org.robolectric.RobolectricTestRunner::class)
 class CalendarViewModelTest {
 
     private lateinit var viewModel: CalendarViewModel
     private val testDispatcher = StandardTestDispatcher()
+    private val fakeRepo = FakeTodoListRepository()
 
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
-        val fakeRepo = FakeTodoListRepository()
-        viewModel = CalendarViewModel(fakeRepo)
-    }
 
-    @Test
-    fun updateDateTest(){
-        assertEquals(1,1)
+        viewModel = CalendarViewModel(fakeRepo)
     }
 
     @After
     fun tearDown() {
         Dispatchers.resetMain()
     }
+
+    @Test
+    fun updateDateTest(){
+        val newDate = LocalDate.of(2025, 4, 13)
+        viewModel.updateSelectedDate(newDate)
+
+        val actual = viewModel.selectedDate.value
+        assertEquals(newDate, actual)
+    }
+
+    @Test
+    fun clearListTest() {
+        val item = TodoData("ID","title","desc", false)
+        viewModel.addDisplayItem(item)
+        viewModel.clearList()
+        assertEquals(emptyList<TodoData>(), viewModel.getDisplayedList())
+    }
+
+    @Test
+    fun addDisplayItemTest() {
+        val item = TodoData("ID","title","desc", false)
+        viewModel.addDisplayItem(item)
+
+        assertEquals(listOf(item), viewModel.getDisplayedList())
+    }
+
+
 
 }
 
@@ -70,4 +95,9 @@ private class FakeTodoListRepository:ListRepository<TodoData>() {
     override suspend fun deleteAll() {
         todoListFlow.value = emptyList()
     }
+
+    fun emitTodos(list: List<TodoData>) {
+        todoListFlow.value = list
+    }
+
 }

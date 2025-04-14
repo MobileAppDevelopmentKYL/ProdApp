@@ -73,6 +73,7 @@ androidx-navigation-testing = { group = "androidx.navigation", name = "navigatio
 androidx-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espressoContrib" }
 hamcrest = { group = "org.hamcrest", name = "hamcrest", version.ref = "hamcrest" }
 kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
+robolectric = "org.robolectric:robolectric:4.12.1"
 
 
 [plugins]

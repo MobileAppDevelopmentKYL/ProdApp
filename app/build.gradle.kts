@@ -95,6 +95,6 @@ dependencies {
     testImplementation(libs.hamcrest)
     androidTestImplementation(libs.hamcrest)
     testImplementation(libs.kotlinx.coroutines.test)
-
+    testImplementation(libs.robolectric)
 
 }
