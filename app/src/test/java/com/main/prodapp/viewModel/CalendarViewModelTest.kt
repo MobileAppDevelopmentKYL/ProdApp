@@ -77,12 +77,12 @@ private class FakeTodoListRepository:ListRepository<TodoData>() {
         return todoListFlow.value.first { it.title == title }
     }
 
-//    fun updateTodo(todoData: TodoData) {
-//        val updatedList = todoListFlow.value.map {
-//            if (it.title == todoData.title) todoData else it
-//        }
-//        todoListFlow.value = updatedList
-//    }
+    override fun updateTodo(todoData: TodoData) {
+        val updatedList = todoListFlow.value.map {
+            if (it.title == todoData.title) todoData else it
+        }
+        todoListFlow.value = updatedList
+    }
 
     override suspend fun insertTodo(todoData: TodoData) {
         todoListFlow.value += todoData

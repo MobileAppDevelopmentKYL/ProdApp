@@ -14,5 +14,5 @@ abstract class ListRepository<T> {
 
     abstract suspend fun deleteAll()
 
-    //abstract fun updateTodo(todoData: T)
+    abstract fun updateTodo(todoData: T)
 }

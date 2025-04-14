@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.main.prodapp.database.ListRepository
 import com.main.prodapp.database.TodoListRepository
 import com.main.prodapp.database.TodoData
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,11 +12,10 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-private const val TAG = "TodoListViewModel"
+//private const val TAG = "TodoListViewModel"
 
-class TodoListViewModel(title: String) : ViewModel() {
+class TodoListViewModel(title: String, private val todoListRepo: ListRepository<TodoData> = TodoListRepository.get()) : ViewModel() {
 
-    private val todoListRepo = TodoListRepository.get()
     private val _todoList: MutableStateFlow<List<TodoData>> = MutableStateFlow(emptyList())
     val todoList: StateFlow<List<TodoData>> = _todoList.asStateFlow()
 
@@ -23,7 +23,7 @@ class TodoListViewModel(title: String) : ViewModel() {
     val todoItem : StateFlow<TodoData?> = _todoItem.asStateFlow()
 
     init {
-        Log.d(TAG, "ViewModel instance created")
+        //Log.d(TAG, "ViewModel instance created")
         viewModelScope.launch {
             todoListRepo.getTodoList().collect {
                 _todoList.value = it
@@ -56,7 +56,7 @@ class TodoListViewModel(title: String) : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
-        Log.d(TAG, "ViewModel instance about to be destroyed")
+        //Log.d(TAG, "ViewModel instance about to be destroyed")
 
         viewModelScope.launch {
             todoItem.value?.let{todoListRepo.updateTodo(it)}

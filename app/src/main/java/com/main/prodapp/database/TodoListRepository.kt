@@ -20,7 +20,7 @@ class TodoListRepository @OptIn(DelicateCoroutinesApi::class) constructor(
     override fun getTodoList(): Flow<List<TodoData>> = database.todoListDao().getTodoList()
     override suspend fun getTodoItem(title: String): TodoData = database.todoListDao().getTodoItem(title)
 
-    fun updateTodo(todoData: TodoData){
+    override fun updateTodo(todoData: TodoData){
         coroutineScope.launch {
             database.todoListDao().updateTodo(todoData)
         }
