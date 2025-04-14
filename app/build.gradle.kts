@@ -94,5 +94,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.contrib)
     testImplementation(libs.hamcrest)
     androidTestImplementation(libs.hamcrest)
+    testImplementation(libs.kotlinx.coroutines.test)
+
 
 }

@@ -13,12 +13,12 @@ private const val DATABASE_NAME = "todolist_database"
 class TodoListRepository @OptIn(DelicateCoroutinesApi::class) constructor(
     context: Context,
     private val coroutineScope : CoroutineScope = GlobalScope
-) {
+): ListRepository<TodoData>() {
 
     private val database = TodoListDatabase.getInstance(context.applicationContext)
 
-    fun getTodoList(): Flow<List<TodoData>> = database.todoListDao().getTodoList()
-    suspend fun getTodoItem(title: String): TodoData = database.todoListDao().getTodoItem(title)
+    override fun getTodoList(): Flow<List<TodoData>> = database.todoListDao().getTodoList()
+    override suspend fun getTodoItem(title: String): TodoData = database.todoListDao().getTodoItem(title)
 
     fun updateTodo(todoData: TodoData){
         coroutineScope.launch {
@@ -26,15 +26,15 @@ class TodoListRepository @OptIn(DelicateCoroutinesApi::class) constructor(
         }
     }
 
-    suspend fun insertTodo(todoData: TodoData) {
+    override suspend fun insertTodo(todoData: TodoData) {
         database.todoListDao().insertTodo(todoData)
     }
 
-    suspend fun removeTodo(todoData: TodoData) {
+   override suspend fun removeTodo(todoData: TodoData) {
         database.todoListDao().removeTodo(todoData)
     }
 
-    suspend fun deleteAll(todoData: TodoData) {
+    override suspend fun deleteAll() {
         database.todoListDao().deleteAll()
     }
 

@@ -72,6 +72,7 @@ androidx-fragment-testing = { group = "androidx.fragment", name = "fragment-test
 androidx-navigation-testing = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigationTesting" }
 androidx-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espressoContrib" }
 hamcrest = { group = "org.hamcrest", name = "hamcrest", version.ref = "hamcrest" }
+kotlinx-coroutines-test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3"
 
 
 [plugins]
