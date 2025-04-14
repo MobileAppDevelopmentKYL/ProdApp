@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">생산성 앱</string>
+
+    <!--Nav bar -->
+    <string name="calendar_icon_name">달력</string>
+    <string name="inbox_icon_name">편지함</string>
+    <string name="profile_icon_name">프로필</string>
+    <string name="setting_icon_name">설정</string>
+
+    <!-- Sign In/Sign Up/Sign Out -->
+    <string name="sign_in">로그인</string>
+    <string name="sign_up">회원가입</string>
+    <string name="sign_out">로그아웃</string>
+    <string name="email_hint">이메일 입력</string>
+    <string name="password_hint">비밀번호 입력</string>
+    <string name="confirm_password_hint">비밀번호 재입력</string>
+
+    <string name="todo_list_icon_name">목록</string>
+    <string name="new_item">새 항목</string>
+
+
+    <!--Todolist -->
+    <string name="todo_title">제목</string>
+    <string name="todo_detail">디테일</string>
+    <string name="todo_select_date">날짜</string>
+    <string name="todo_add">추가</string>
+    <string name="todo_update">업데이트</string>
+
+
+    <!--list item -->
+    <string name="camera">카메라</string>
+    <string name="checkbox_list">완료 체크박스</string>
+
+    <!--settings -->
+    <string name="setting_signout">로그아웃</string>
+
+
+    <!--calendar -->
+    <string name="prev_calendar">이전</string>
+    <string name="next_calendar">다음</string>
+    <string name="init_march">3월 2025</string>
+
+    <!--calendar days -->
+    <string name="monday">월</string>
+    <string name="tuesday">화</string>
+    <string name="wednesday">수</string>
+    <string name="thursday">목</string>
+    <string name="friday">금</string>
+    <string name="saturday">토</string>
+    <string name="sunday">일</string>
+
+    <string name="calendar_todo">끝내야 할 아이템:</string>
+
+    <!--calendar item -->
+    <string name="calendar_item_title">캘린더 아이템 제목</string>
+    <string name="calendar_item_desc">캘린더 아이템 설명</string>
+
+    <!--calendar cell -->
+    <string name="calendar_things_todo_on">해야할것</string>
+    <string name="calendar_things_please">날짜를 골라주세요</string>
+
+
+    <!--character -->
+    <string name="character_level">레벨</string>
+    <string name="character_xp">마법</string>
+    <string name="character_health">체력</string>
+    <string name="character_strength">힘</string>
+
+    <string name="character_adventure">여행</string>
+
+
+    <string name="adventure_dragon">드래곤이랑 싸워서 이겼습니다!</string>
+    <string name="adventure_goblin">고블린이랑 싸워서 졌습니다! 쓸모가 없네여!</string>
+    <string name="adventure_gold">금광을 찾았습니다!</string>
+    <string name="adventure_useless">쓸모가 없었어여!</string>
+
+
+    <string name="character_gained_text">마법을 얻었습니다!</string>
+
+
+
+
+
+
+
+</resources>

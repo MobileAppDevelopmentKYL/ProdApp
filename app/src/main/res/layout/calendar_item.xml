@@ -35,14 +35,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
-                android:text="CalendarItemTitle"
+                android:text="@string/calendar_item_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
             <TextView
                 android:id="@+id/todoDescriptionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CalendarItemDesc"
+                android:text="@string/calendar_item_desc"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 

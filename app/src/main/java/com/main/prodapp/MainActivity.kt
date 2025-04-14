@@ -12,7 +12,7 @@ import com.main.prodapp.databinding.ActivityMainBinding
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : LocaleActivity() {
 
     private lateinit var binding : ActivityMainBinding
 

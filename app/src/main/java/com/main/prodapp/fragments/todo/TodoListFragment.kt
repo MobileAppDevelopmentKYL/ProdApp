@@ -31,6 +31,7 @@ import id.zelory.compressor.constraint.destination
 import id.zelory.compressor.constraint.format
 import id.zelory.compressor.constraint.quality
 import id.zelory.compressor.constraint.resolution
+
 import kotlinx.coroutines.launch
 import java.io.File
 import java.lang.String.format
@@ -68,34 +69,35 @@ class TodoListFragment : Fragment() {
         if (success) {
             currentTodoData?.let { todoData ->
 
-                todoData.imagePath = currentFilePath
-
-                FirebaseService.uploadImage(currentFilePath ?: "none", storage)
-
                 viewLifecycleOwner.lifecycleScope.launch {
-                    FirebaseService.updateTaskImage(todoData.taskID, currentFilePath ?: "none")
+
+                    val compressedFile =
+                        Compressor.compress(requireContext(), File(currentFilePath!!)) {
+                            quality(80)
+                            format(Bitmap.CompressFormat.JPEG)
+                            resolution(1024, 1024)
+                            destination(
+                                File(
+                                    requireContext().cacheDir,
+                                    "compressed_${System.currentTimeMillis()}.jpg"
+                                )
+                            )
+                        }
+
+                    Log.d(TAG, "FILE: " + compressedFile.absolutePath)
+
+                    FirebaseService.uploadImage(compressedFile.absolutePath ?: "none", storage)
+                    FirebaseService.updateTaskImage(
+                        todoData.taskID,
+                        compressedFile.absolutePath ?: "none"
+                    )
+
+                    todoData.imagePath = compressedFile.absolutePath
+
+                    updateDataWithImage(todoData)
+
+                    adapter.notifyDataSetChanged()
                 }
-
-                updateDataWithImage(todoData)
-
-//                viewLifecycleOwner.lifecycleScope.launch {
-//
-//                    val compressedFile = Compressor.compress(requireContext(), File(currentFilePath!!)) {
-//                        quality(80)
-//                        format(Bitmap.CompressFormat.JPEG)
-//                        resolution(1024, 1024)
-//                        destination(File(requireContext().cacheDir, "compressed_${System.currentTimeMillis()}.jpg"))
-//                    }
-//
-//                    Log.d(TAG, "FILE: " + compressedFile.absolutePath)
-//
-//                    FirebaseService.uploadImage(compressedFile.absolutePath ?: "none", storage)
-//                    FirebaseService.updateTaskImage(todoData.taskID, compressedFile.absolutePath ?: "none")
-//
-//                    todoData.imagePath = compressedFile.absolutePath
-//
-//                    updateDataWithImage(todoData)
-//                }
             }
         }
     }
@@ -245,7 +247,7 @@ class TodoListFragment : Fragment() {
         binding.updateButton.setOnClickListener {
 
             val newDescription = binding.editTextDes.text.toString()
-            val dateVal = binding.editDateButton.toString()
+            val dateVal = binding.editDateButton.text.toString()
 
             if (binding.editTextTitle.text.isNotEmpty() && newDescription.isNotEmpty() && dateVal != "Select Date") {
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd")
