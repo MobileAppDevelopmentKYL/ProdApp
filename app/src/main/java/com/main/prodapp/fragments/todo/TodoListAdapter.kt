@@ -2,6 +2,7 @@ package com.main.prodapp.fragments.todo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.main.prodapp.database.TodoData
 import com.main.prodapp.databinding.ListItemTodoBinding
@@ -28,5 +29,6 @@ class TodoListAdapter(
     fun updateTodoList(newTodoList: List<TodoData>) {
         todo = newTodoList
         notifyDataSetChanged()  // Should use DiffUtil
+
     }
 }

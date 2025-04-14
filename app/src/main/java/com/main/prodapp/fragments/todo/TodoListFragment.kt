@@ -2,6 +2,7 @@ package com.main.prodapp.fragments.todo
 
 
 import android.app.DatePickerDialog
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -25,8 +26,14 @@ import com.main.prodapp.databinding.FragmentTodoListBinding
 import com.main.prodapp.helpers.FirebaseService
 import com.main.prodapp.viewModel.TodoListViewModel
 import com.main.prodapp.viewModel.TodoListViewModelFactory
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.destination
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
 import kotlinx.coroutines.launch
 import java.io.File
+import java.lang.String.format
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
