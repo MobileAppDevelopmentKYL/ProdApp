@@ -1,5 +1,6 @@
 package com.main.prodapp.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +21,7 @@ import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.database.UserData
 import com.main.prodapp.databinding.FragmentSignInBinding
 import com.main.prodapp.helpers.FirebaseService
+import com.main.prodapp.helpers.LocaleHelper
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
@@ -53,6 +55,23 @@ class SignInFragment : Fragment(), View.OnClickListener {
 
         binding.signInButton.setOnClickListener(this)
         binding.moveToSignUpButton.setOnClickListener(this)
+
+        binding.signInEnglishButton.setOnClickListener{
+
+            LocaleHelper.setEnglish(requireContext())
+            LocaleHelper.updateLocale(requireContext(), language = "en", country = "US")
+
+            requireActivity().recreate()
+
+        }
+
+        binding.signInKoreanButton.setOnClickListener{
+            LocaleHelper.setKorean(requireContext())
+            LocaleHelper.updateLocale(requireContext(), language = "ko", country = "KR")
+
+            requireActivity().recreate()
+
+        }
     }
 
     override fun onStart() {
@@ -76,6 +95,11 @@ class SignInFragment : Fragment(), View.OnClickListener {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
             binding.signInButton.id -> {
@@ -95,6 +119,10 @@ class SignInFragment : Fragment(), View.OnClickListener {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(requireActivity()) { task ->
                     if (task.isSuccessful) {
+
+
+                        LocaleHelper.setEnglish(requireContext())
+                        requireActivity().recreate()
                         loadUserData()
                     } else {
                         Toast.makeText(context,"Authentication failed.",Toast.LENGTH_SHORT,).show()

@@ -7,23 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import androidx.lifecycle.lifecycleScope
-import com.google.firebase.firestore.FirebaseFirestore
-import com.main.prodapp.database.TodoData
-import com.main.prodapp.database.TodoListDatabase
 import com.main.prodapp.databinding.ActivityMainBinding
-import com.main.prodapp.helpers.FirebaseService
-import kotlinx.coroutines.launch
 
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : LocaleActivity() {
 
     private lateinit var binding : ActivityMainBinding
-
-    private lateinit var database: TodoListDatabase
-    private lateinit var db : FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,16 +60,11 @@ class MainActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
 
-//        lifecycleScope.launch {
-//            database.todoListDao().deleteAll()
-//        }
-
         Log.d(TAG, "Start onStop")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
         Log.d(TAG, "Start onDestroy")
     }
 }

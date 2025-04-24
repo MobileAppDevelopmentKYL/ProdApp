@@ -1,12 +1,13 @@
 package com.main.prodapp.viewModel
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.main.prodapp.database.ListRepository
 import com.main.prodapp.database.TodoData
 import com.main.prodapp.database.TodoListRepository
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,17 +16,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-private const val TAG = "CalendarViewModel"
+//private const val TAG = "CalendarViewModel"
 
-class CalendarViewModel : ViewModel() {
-
-    private val todoListRepo = TodoListRepository.get()
+class CalendarViewModel(
+    private val todoListRepo: ListRepository<TodoData> = TodoListRepository.get()
+) : ViewModel() {
     private val _todoList: MutableStateFlow<List<TodoData>> = MutableStateFlow(emptyList())
-    val todoList: StateFlow<List<TodoData>> = _todoList.asStateFlow()
+    private val todoList: StateFlow<List<TodoData>> = _todoList.asStateFlow()
     private var displayedList: List<TodoData> = emptyList()
 
     init {
-        Log.d(TAG, "ViewModel instance created")
+
         viewModelScope.launch {
             todoListRepo.getTodoList().collect {
                 _todoList.value = it
@@ -45,7 +46,7 @@ class CalendarViewModel : ViewModel() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun updateSelectedDate(newDate: LocalDate) {
         _selectedDate.value = newDate
-        Log.d(TAG, newDate.toString())
+
     }
 
     fun addDisplayItem(data: TodoData){
@@ -55,4 +56,18 @@ class CalendarViewModel : ViewModel() {
     fun clearList(){
         displayedList = emptyList()
     }
+
+    fun getDisplayedList(): List<TodoData> {
+        return displayedList
+    }
 }
+
+
+class CalendarViewModelFactory(
+    private val repo: TodoListRepository
+) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return CalendarViewModel(repo) as T
+    }
+}
+

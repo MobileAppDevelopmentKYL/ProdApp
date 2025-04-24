@@ -2,6 +2,7 @@ package com.main.prodapp.fragments.todo
 
 
 import android.app.DatePickerDialog
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -25,8 +26,15 @@ import com.main.prodapp.databinding.FragmentTodoListBinding
 import com.main.prodapp.helpers.FirebaseService
 import com.main.prodapp.viewModel.TodoListViewModel
 import com.main.prodapp.viewModel.TodoListViewModelFactory
+import id.zelory.compressor.Compressor
+import id.zelory.compressor.constraint.destination
+import id.zelory.compressor.constraint.format
+import id.zelory.compressor.constraint.quality
+import id.zelory.compressor.constraint.resolution
+
 import kotlinx.coroutines.launch
 import java.io.File
+import java.lang.String.format
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.Calendar
@@ -38,7 +46,6 @@ private const val TAG = "TodoListFragment"
 
 class TodoListFragment : Fragment() {
 
-    private lateinit var todoRecyclerView: RecyclerView
     private var currentFilePath: String? = null
 
     private val todoListViewModel: TodoListViewModel by viewModels {
@@ -61,17 +68,37 @@ class TodoListFragment : Fragment() {
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success) {
             currentTodoData?.let { todoData ->
-                todoData.imagePath = currentFilePath
-
-                FirebaseService.uploadImage(currentFilePath ?: "none", storage)
 
                 viewLifecycleOwner.lifecycleScope.launch {
-                    FirebaseService.updateTaskImage(todoData.taskID, currentFilePath ?: "none")
+
+                    val compressedFile =
+                        Compressor.compress(requireContext(), File(currentFilePath!!)) {
+                            quality(80)
+                            format(Bitmap.CompressFormat.JPEG)
+                            resolution(1024, 1024)
+                            destination(
+                                File(
+                                    requireContext().cacheDir,
+                                    "compressed_${System.currentTimeMillis()}.jpg"
+                                )
+                            )
+                        }
+
+                    Log.d(TAG, "FILE: " + compressedFile.absolutePath)
+
+                    FirebaseService.uploadImage(compressedFile.absolutePath ?: "none", storage)
+                    FirebaseService.updateTaskImage(
+                        todoData.taskID,
+                        compressedFile.absolutePath ?: "none"
+                    )
+
+                    todoData.imagePath = compressedFile.absolutePath
+
+                    updateDataWithImage(todoData)
+
+                    adapter.notifyDataSetChanged()
                 }
-
-                updateDataWithImage(todoData)
             }
-
         }
     }
 
@@ -100,6 +127,7 @@ class TodoListFragment : Fragment() {
         _binding = FragmentTodoListBinding.inflate(inflater, container, false)
 
         binding.todoRecyclerView.layoutManager = LinearLayoutManager(context)
+
         adapter = TodoListAdapter(
             emptyList(),
             onDelete = { todoData -> deleteTodoItem(todoData) },
@@ -157,18 +185,11 @@ class TodoListFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 todoListViewModel.todoList.collect { todoList ->
-                    binding.todoRecyclerView.adapter =
-                        TodoListAdapter(
-                            todoList,
-                            onDelete = { todoData -> deleteTodoItem(todoData) },
-                            onUpdate = { todoData -> updateData(todoData) },
-                            onCapture = { todoData -> captureImage(todoData)}
-                        )
+                    adapter.updateTodoList(todoList)
                 }
             }
         }
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -203,6 +224,8 @@ class TodoListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
 
+        _binding = null
+
         Log.d(TAG, "Start onDestoryView")
     }
 
@@ -224,7 +247,7 @@ class TodoListFragment : Fragment() {
         binding.updateButton.setOnClickListener {
 
             val newDescription = binding.editTextDes.text.toString()
-            val dateVal = binding.editDateButton.toString()
+            val dateVal = binding.editDateButton.text.toString()
 
             if (binding.editTextTitle.text.isNotEmpty() && newDescription.isNotEmpty() && dateVal != "Select Date") {
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd")

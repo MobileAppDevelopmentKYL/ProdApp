@@ -8,7 +8,7 @@ import java.util.Date
 data class TodoData (
     @PrimaryKey val taskID: String,
     val title: String,
-    val description: String,
+    var description: String,
     val isCompleted: Boolean = false,
     var imagePath: String? = null,
     var targetDate: Long? = null

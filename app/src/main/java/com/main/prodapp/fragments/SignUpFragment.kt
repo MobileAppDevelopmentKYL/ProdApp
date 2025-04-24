@@ -44,6 +44,11 @@ class SignUpFragment : Fragment(), View.OnClickListener {
         binding.signUpButton.setOnClickListener(this)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onClick(v: View) {
         when (v.id) {
             binding.signUpButton.id -> {

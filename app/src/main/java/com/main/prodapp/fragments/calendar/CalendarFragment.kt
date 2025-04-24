@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.main.prodapp.R
 import com.main.prodapp.database.TodoData
+import com.main.prodapp.database.TodoListRepository
 import com.main.prodapp.databinding.FragmentCalendarBinding
 import com.main.prodapp.viewModel.CalendarViewModel
+import com.main.prodapp.viewModel.CalendarViewModelFactory
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.YearMonth
@@ -25,7 +27,9 @@ private const val TAG = "CalendarFragment"
 
 class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
 
-    private val viewModel: CalendarViewModel by viewModels()
+    private val viewModel: CalendarViewModel by viewModels {
+        CalendarViewModelFactory(TodoListRepository.get())
+    }
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = checkNotNull(_binding) {
         "Cannot access binding because it is null. Is the view visible?"
@@ -56,7 +60,7 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
         super.onViewCreated(view, savedInstanceState)
         initWidgets()
         setMonthView(viewModel.selectedDate.value!!)
-        binding.dateSelectionHeader.text = "Please Select a Date"
+        binding.dateSelectionHeader.text = getString(R.string.calendar_things_please)
 
         binding.prevMonthButton.setOnClickListener { previousMonthAction() }
         binding.nextMonthButton.setOnClickListener { nextMonthAction() }
@@ -171,7 +175,7 @@ class CalendarFragment : Fragment(), CalendarAdapter.OnItemListener {
     }
 
     private fun displayDateSelected(date: LocalDate){
-        binding.dateSelectionHeader.text = "Things to do on"
+        binding.dateSelectionHeader.text = getString(R.string.calendar_things_todo_on)
         binding.dateSelected.text=date.toString()
     }
 
